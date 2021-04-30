@@ -50,7 +50,7 @@ The code is comaptible with ROS Jade and ROS Indigo. The detail installation ins
 * [Lentin Joseph](https://in.linkedin.com/in/lentinjoseph)
 
 ### Installation
-The code is comaptible with ROS Kinetic and ROS Indigo. The detail installation instruction of each packages is mentioned on the book
+The code is comaptible with ROS melodic and ROS Indigo. The detail installation instruction of each packages is mentioned on the book
 
 ### Tutorials
 * **Chapter 1:**  Getting Started with ROS Robotics Application Development
@@ -103,3 +103,10 @@ The code is comaptible with ROS Jade and ROS Indigo. The detail installation ins
 * **Chapter 12**: Troubleshooting and best practices in ROS
 
 roslaunch turtlebot_teleop keyboard_teleop.launch
+
+
+sudo apt-get install ros-melodic-depthimage-to-laserscan ros-melodic-
+kobuki-gazebo-plugins ros-melodic-robot-pose-ekf ros-melodic-yocs-cmd-vel-
+mux ros-melodic-move-base-msgs ros-melodic-openni-launch ros-melodic-
+kobuki-description ros-melodic-gmapping ros-melodic-amcl ros-melodic-map-
+server
