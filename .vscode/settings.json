@@ -11,5 +11,8 @@
     "C_Cpp.enhancedColorization": "False",
     "C_Cpp.formatting": "Default",
     "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "editor.colorDecorators": false,
+    "editor.columnSelection": true,
+    "editor.semanticHighlighting.enabled": true
 }

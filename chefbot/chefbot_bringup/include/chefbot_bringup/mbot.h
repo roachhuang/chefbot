@@ -9,7 +9,7 @@
 #include <std_msgs/Int32.h>
 #include <std_msgs/Float32.h>
 
-#include <rospy_tutorials/Floats.h>
+// #include <rospy_tutorials/Floats.h>
 #include <chefbot_bringup/joint_state.h>
 #include <angles/angles.h>
 
@@ -50,7 +50,7 @@ private:
 	// Data member arrays to store the state of the robot's resources (joints, sensors)
 	double pos[2];
 	double vel[2];
-	// double eff[2];
+	double eff[2];
 	int	encoder_ticks[2];
 	const double N = 990;
 	ros::Publisher vr_pub;

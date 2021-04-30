@@ -4,7 +4,7 @@ import rospy
 #from rospy_tutorials.msg import Floats
 from std_msgs.msg import Float32
 # <packagename>.srv
-from diff_drive.srv import joint_state, joint_stateResponse
+from chefbot_bringup.srv import joint_state, joint_stateResponse
 # from Float_array.srv import Floats_array, Float_arrayResponse,
 # Float_arrayRequest
 class Wheel_state(object):
