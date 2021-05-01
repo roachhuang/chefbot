@@ -60,11 +60,7 @@
                  iyy="0.019995" iyz="0.0" 
                  izz="0.03675" />
       </inertial>
-    </link>
-    
-
-
-
+    </link>   
 <!--
     <joint name="wheel_left_joint" type="continuous">
       <parent link="base_link"/>
@@ -121,10 +117,7 @@
                  izz="0.001" />
       </inertial>
     </link>
-
-
 -->
-
 
 	  <link name="left_axle_link">
 	    <inertial>
@@ -216,13 +209,12 @@
 
         <!-- Fixed because we never rotate it anyway, it is just for show -->
         <!-- NOTE This may prevent gazebo from working with this model -->
-	  <joint name="left_wheel_joint" type="fixed">
+	  <joint name="left_wheel_joint" type="continuous">
 	    <origin xyz="0 0.01905 0" rpy="0 0 0"/>
 	    <parent link="left_axle_link"/>
 	    <child link="left_wheel_link"/>
 	    <axis xyz="0 1 0"/>
-	  </joint>
-	
+	  </joint>	
 
 
 	  <link name="right_wheel_link">
@@ -251,7 +243,7 @@
 	
         <!-- Fixed because we never rotate it anyway, it is just for show -->
         <!-- NOTE This may prevent gazebo from working with this model -->
-	  <joint name="right_wheel_joint" type="fixed">
+	  <joint name="right_wheel_joint" type="continuous">
 	    <origin xyz="0 -0.01905 0" rpy="0 0 0"/>
 	    <parent link="right_axle_link"/>
 	    <child link="right_wheel_link"/>

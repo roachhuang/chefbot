@@ -25,7 +25,8 @@
 
   <!-- 3D Sensors -->
 
-  <xacro:include filename="$(find chefbot_description)/urdf/sensors/kinect.urdf.xacro"/> 
+
+  <xacro:include filename="$(find chefbot_description)/urdf/sensors/kinect.urdf.xacro"/>
   <xacro:include filename="$(find chefbot_description)/urdf/sensors/asus_xtion_pro.urdf.xacro"/> 
-  
+
 </robot>

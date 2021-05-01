@@ -82,7 +82,7 @@ add_service_files(
 generate_messages(
    DEPENDENCIES
    geometry_msgs
-   #move_base_msgs
+   move_base_msgs
    #nav_msgs
    std_msgs
  )
