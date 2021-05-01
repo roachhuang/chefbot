@@ -11,8 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   depthimage_to_laserscan
   geometry_msgs
   move_base_msgs
-  nav_msgs
-  #openni_launch
+  nav_msgs  
+  openni_launch
   robot_pose_ekf
   robot_state_publisher
   roscpp

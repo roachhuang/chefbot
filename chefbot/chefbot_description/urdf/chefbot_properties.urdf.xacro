@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- 
   These properties must be observed by any machine
   that wants to be defined as a turtlebot. Refer
   to the REP for more details.    
@@ -17,12 +18,11 @@
    Note: REP needs to be updated with the information below 
    (currently in development and awaiting feedback)
 -->
-<robot name="xacro_properties" xmlns:xacro="http://ros.org/wiki/xacro">
 
-<xacro:property name="cam_px" value="-0.087"/>
-<xacro:property name="cam_py" value="-0.0125" />
-<xacro:property name="cam_pz" value="0.2870" />
-<xacro:property name="cam_or" value="0" />
-<xacro:property name="cam_op" value="0" />
-<xacro:property name="cam_oy" value="0" />
+  <xacro:property name="cam_px" value="-0.087" />
+  <xacro:property name="cam_py" value="-0.0125" />
+  <xacro:property name="cam_pz" value="0.2870" />
+  <xacro:property name="cam_or" value="0" />
+  <xacro:property name="cam_op" value="0" />
+  <xacro:property name="cam_oy" value="0" />
 </robot>

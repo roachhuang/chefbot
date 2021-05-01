@@ -113,3 +113,7 @@ server
 
 https://wiki.ros.org/differential_drive/tutorials/setup
 
+setpoint: /roachbot/lwheel/command
+feedback: h/w interface read method
+cmd: h/w interface write method
+

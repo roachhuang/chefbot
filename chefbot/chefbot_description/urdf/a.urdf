@@ -9,6 +9,51 @@
     - 3d Sensor : kinect
 -->
 <robot name="turtlebot">
+  <!-- 
+  These properties must be observed by any machine
+  that wants to be defined as a turtlebot. Refer
+  to the REP for more details.    
+  http://www.ros.org/reps/rep-0119.html     
+  
+ ======================================================================
+  REP 119 : Rgb camera link relative to the Base link 
+ ====================================================================== 
+   Base link is currently defined as the rotational centre on the bottom
+   of the base mould. For both create and kobuki this is actually exactly
+   the same 3d world point. 
+   
+   This may cause an issue with a base with much different floor clearance.
+   Should we be using base_footprint for this specification instead?
+   Note: REP needs to be updated with the information below 
+   (currently in development and awaiting feedback)
+-->
+  <material name="black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>
+  <material name="blue">
+    <color rgba="0.0 0.0 0.8 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 1.0 0.0 1.0"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+  <material name="orange">
+    <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
+  </material>
+  <material name="brown">
+    <color rgba="0.870588235294 0.811764705882 0.764705882353 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="0.8 0.0 0.0 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+  <material name="gold">
+    <color rgba="0.854901960784 0.647058823529 0.125490196078 1.0"/>
+  </material>
   <!-- Need changes in chefbot base and circle -->
   <!--  <xacro:include filename="$(find create_description)/urdf/create.urdf.xacro"/> 
   <xacro:include filename="$(find kobuki_description)/urdf/kobuki.urdf.xacro" />
@@ -18,6 +63,24 @@
   <!-- <xacro:include filename="$(find chefbot_description)/urdf/stacks/circles.urdf.xacro"/> -->
   <!--  <xacro:include filename="$(find turtlebot_description)/urdf/stacks/hexagons.urdf.xacro"/> -->
   <!-- 3D Sensors -->
+  <!-- 
+  These properties must be observed by any machine
+  that wants to be defined as a turtlebot. Refer
+  to the REP for more details.    
+  http://www.ros.org/reps/rep-0119.html     
+  
+ ======================================================================
+  REP 119 : Rgb camera link relative to the Base link 
+ ====================================================================== 
+   Base link is currently defined as the rotational centre on the bottom
+   of the base mould. For both create and kobuki this is actually exactly
+   the same 3d world point. 
+   
+   This may cause an issue with a base with much different floor clearance.
+   Should we be using base_footprint for this specification instead?
+   Note: REP needs to be updated with the information below 
+   (currently in development and awaiting feedback)
+-->
   <!-- 
     These properties must be observed by any machine
     that wants to be defined as a turtlebot. Refer
@@ -47,6 +110,7 @@
   </joint>
   <link name="base_link">
     <visual>
+      <material name="blue"/>
       <geometry>
         <!-- new mesh -->
         <mesh filename="package://chefbot_description/meshes/base_plate.dae"/>
@@ -75,63 +139,6 @@
       <inertia ixx="0.019995" ixy="0.0" ixz="0.0" iyy="0.019995" iyz="0.0" izz="0.03675"/>
     </inertial>
   </link>
-  <!--
-    <joint name="wheel_left_joint" type="continuous">
-      <parent link="base_link"/>
-      <child link="chefbot_wheel_left_link"/>
-      <origin xyz="0 ${0.28/2} 0.026" rpy="${-M_PI/2} 0 0"/>
-      <axis xyz="0 0 1"/>
-    </joint>
-    <link name="chefbot_wheel_left_link">
-      <visual>
-        <geometry>
-          <mesh filename="package://chefbot_description/meshes/wheel.dae"/>
-        </geometry>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-      </visual>
-      <collision>
-        <geometry>
-          <cylinder length="0.0206" radius="0.0352"/>
-        </geometry>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-      </collision>
-      <inertial>
-        <mass value="0.01" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-                 iyy="0.001" iyz="0.0" 
-                 izz="0.001" />
-      </inertial>
-    </link>
-    
-    <joint name="wheel_right_joint" type="continuous">
-      <parent link="base_link"/>
-      <child link="chefbot_wheel_right_link"/>
-      <origin xyz="0.00 -${0.28/2} 0.026" rpy="${-M_PI/2} 0 0"/>
-      <axis xyz="0 0 1"/>
-    </joint>
-    <link name="chefbot_wheel_right_link">
-      <visual>
-        <geometry>
-          <mesh filename="package://chefbot_description/meshes/wheel.dae"/>
-        </geometry>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-      </visual>
-      <collision>
-        <geometry>
-          <cylinder length="0.0206" radius="0.0350"/>
-        </geometry>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-      </collision>
-      <inertial>
-        <mass value="0.01" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
-                 iyy="0.001" iyz="0.0" 
-                 izz="0.001" />
-      </inertial>
-    </link>
--->
   <link name="left_axle_link">
     <inertial>
       <origin xyz="0 -0.035 0.021"/>
@@ -143,7 +150,7 @@
       <geometry>
         <cylinder length="0.02" radius="0.0045"/>
       </geometry>
-      <material name="light_grey"/>
+      <material name="glod"/>
     </visual>
     <collision>
       <origin rpy="0 1.5707 1.5707" xyz="0 -0.035 0.021"/>
@@ -169,7 +176,7 @@
       <geometry>
         <cylinder length="0.002" radius="0.0045"/>
       </geometry>
-      <material name="light_grey"/>
+      <material name="gold"/>
     </visual>
     <collision>
       <origin rpy="0 1.5707 1.5707" xyz="0 0.035 0.02"/>
@@ -253,8 +260,8 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </collision>
     <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="0.01"/>
-      <origin xyz="0 0 0"/>
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
@@ -271,8 +278,8 @@
       <origin rpy="0 0 0" xyz="0 0 0"/>
     </collision>
     <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <mass value="0.01"/>
-      <origin xyz="0 0 0"/>
       <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
@@ -285,9 +292,9 @@
   </joint>
   <link name="gyro_link">
     <inertial>
-      <mass value="0.001"/>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
+      <mass value="0.01"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="cliff_sensor_left_joint" type="fixed">
@@ -297,9 +304,9 @@
   </joint>
   <link name="cliff_sensor_left_link">
     <inertial>
-      <mass value="0.0001"/>
-      <origin xyz="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="cliff_sensor_right_joint" type="fixed">
@@ -309,9 +316,9 @@
   </joint>
   <link name="cliff_sensor_right_link">
     <inertial>
-      <mass value="0.0001"/>
-      <origin xyz="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="cliff_sensor_front_joint" type="fixed">
@@ -321,194 +328,14 @@
   </joint>
   <link name="cliff_sensor_front_link">
     <inertial>
-      <mass value="0.0001"/>
-      <origin xyz="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
     </inertial>
   </link>
-  <gazebo reference="chefbot_wheel_left_link">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
-  </gazebo>
-  <gazebo reference="chefbot_wheel_right_link">
-    <mu1>1.0</mu1>
-    <mu2>1.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
-  </gazebo>
-  <gazebo reference="chefbot_caster_front_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
-  </gazebo>
-  <gazebo reference="chefbot_caster_back_link">
-    <mu1>0.0</mu1>
-    <mu2>0.0</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
-    <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
-  </gazebo>
-  <gazebo reference="base_link">
-    <mu1>0.3</mu1>
-    <mu2>0.3</mu2>
-    <sensor name="bumpers" type="contact">
-      <always_on>1</always_on>
-      <update_rate>50.0</update_rate>
-      <visualize>true</visualize>
-      <contact>
-        <collision>base_footprint_collision_base_link</collision>
-      </contact>
-    </sensor>
-  </gazebo>
-  <gazebo reference="cliff_sensor_left_link">
-    <sensor name="cliff_sensor_left" type="ray">
-      <always_on>true</always_on>
-      <update_rate>50</update_rate>
-      <visualize>true</visualize>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>50</samples>
-            <resolution>1.0</resolution>
-            <min_angle>-0.0436</min_angle>
-            <!-- -2.5 degree -->
-            <max_angle>0.0436</max_angle>
-            <!-- 2.5 degree -->
-          </horizontal>
-          <!--            Can't use vertical rays until this bug is resolved: -->
-          <!--            https://bitbucket.org/osrf/gazebo/issue/509/vertical-sensor-doesnt-works -->
-          <!-- 	          <vertical> -->
-          <!-- 	            <samples>50</samples> -->
-          <!-- 	            <resolution>1.0</resolution> -->
-          <!-- 	            <min_angle>-0.0436</min_angle>  -2.5 degree -->
-          <!-- 	            <max_angle>0.0436</max_angle> 2.5 degree -->
-          <!-- 	          </vertical> -->
-        </scan>
-        <range>
-          <min>0.01</min>
-          <max>0.15</max>
-          <resolution>1.0</resolution>
-        </range>
-      </ray>
-    </sensor>
-  </gazebo>
-  <gazebo reference="cliff_sensor_right_link">
-    <sensor name="cliff_sensor_right" type="ray">
-      <always_on>true</always_on>
-      <update_rate>50</update_rate>
-      <visualize>true</visualize>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>50</samples>
-            <resolution>1.0</resolution>
-            <min_angle>-0.0436</min_angle>
-            <!-- -2.5 degree -->
-            <max_angle>0.0436</max_angle>
-            <!-- 2.5 degree -->
-          </horizontal>
-          <!--            Can't use vertical rays until this bug is resolved: -->
-          <!--            https://bitbucket.org/osrf/gazebo/issue/509/vertical-sensor-doesnt-works -->
-          <!-- 	          <vertical> -->
-          <!-- 	            <samples>50</samples> -->
-          <!-- 	            <resolution>1.0</resolution> -->
-          <!-- 	            <min_angle>-0.0436</min_angle>  -2.5 degree -->
-          <!-- 	            <max_angle>0.0436</max_angle> 2.5 degree -->
-          <!-- 	          </vertical> -->
-        </scan>
-        <range>
-          <min>0.01</min>
-          <max>0.15</max>
-          <resolution>1.0</resolution>
-        </range>
-      </ray>
-    </sensor>
-  </gazebo>
-  <gazebo reference="cliff_sensor_front_link">
-    <sensor name="cliff_sensor_front" type="ray">
-      <always_on>true</always_on>
-      <update_rate>50</update_rate>
-      <visualize>true</visualize>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>50</samples>
-            <resolution>1.0</resolution>
-            <min_angle>-0.0436</min_angle>
-            <!-- -2.5 degree -->
-            <max_angle>0.0436</max_angle>
-            <!-- 2.5 degree -->
-          </horizontal>
-          <!-- 	          Can't use vertical rays until this bug is resolved: -->
-          <!--            https://bitbucket.org/osrf/gazebo/issue/509/vertical-sensor-doesnt-works -->
-          <!-- 	          <vertical> -->
-          <!-- 	            <samples>50</samples> -->
-          <!-- 	            <resolution>1.0</resolution> -->
-          <!-- 	            <min_angle>-0.0436</min_angle>  -2.5 degree -->
-          <!-- 	            <max_angle>0.0436</max_angle> 2.5 degree -->
-          <!-- 	          </vertical> -->
-        </scan>
-        <range>
-          <min>0.01</min>
-          <max>0.15</max>
-          <resolution>1.0</resolution>
-        </range>
-      </ray>
-    </sensor>
-  </gazebo>
-  <gazebo reference="gyro_link">
-    <sensor name="imu" type="imu">
-      <always_on>true</always_on>
-      <update_rate>50</update_rate>
-      <visualize>false</visualize>
-      <imu>
-        <noise>
-          <type>gaussian</type>
-          <rate>
-            <mean>0.0</mean>
-            <stddev>1.96e-06</stddev>
-            <!-- 0.25 x 0.25 (deg/s) -->
-            <bias_mean>0.0</bias_mean>
-            <bias_stddev>0.0</bias_stddev>
-          </rate>
-          <accel>
-            <!-- not used in the plugin and real robot, hence using tutorial values -->
-            <mean>0.0</mean>
-            <stddev>1.7e-2</stddev>
-            <bias_mean>0.1</bias_mean>
-            <bias_stddev>0.001</bias_stddev>
-          </accel>
-        </noise>
-      </imu>
-    </sensor>
-  </gazebo>
-  <gazebo>
-    <plugin filename="libgazebo_ros_kobuki.so" name="kobuki_controller">
-      <publish_tf>1</publish_tf>
-      <left_wheel_joint_name>wheel_left_joint</left_wheel_joint_name>
-      <right_wheel_joint_name>wheel_right_joint</right_wheel_joint_name>
-      <wheel_separation>.30</wheel_separation>
-      <wheel_diameter>0.09</wheel_diameter>
-      <torque>18.0</torque>
-      <velocity_command_timeout>0.6</velocity_command_timeout>
-      <cliff_sensor_left_name>cliff_sensor_left</cliff_sensor_left_name>
-      <cliff_sensor_center_name>cliff_sensor_front</cliff_sensor_center_name>
-      <cliff_sensor_right_name>cliff_sensor_right</cliff_sensor_right_name>
-      <cliff_detection_threshold>0.04</cliff_detection_threshold>
-      <bumper_name>bumpers</bumper_name>
-      <imu_name>imu</imu_name>
-    </plugin>
-  </gazebo>
+  <!-- Kobuki Gazebo simulation details
+    <kobuki_sim />
+    -->
   <stack_hexagons parent="base_link"/>
   <joint name="camera_rgb_joint" type="fixed">
     <origin rpy="0 0 0" xyz="-0.087 -0.0125 0.287"/>
