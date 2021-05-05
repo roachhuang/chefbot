@@ -6,12 +6,28 @@
     <arg name="headless" default="false" />
     <arg name="debug" default="false" />
 
+    <!-- We resume the logic in empty_world.launch -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)" />
+        <arg name="use_sim_time" value="$(arg use_sim_time)" />
+        <arg name="headless" value="$(arg headless)" />
+    </include>
     <rosparam param="base_width">0.186</rosparam>
     <rosparam param="ticks_meter">4504</rosparam>
+
+    <!--
+	<arg name="node_start_delay" default="5" /> 
+    <node name="launchpad_node" pkg="chefbot_bringup" type="launchpad_node.py" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@'" >
+        <rosparam file="$(find chefbot_bringup)/param/board_config.yaml" command="load" />
+    </node>
+-->
 
     <!-- Load the URDF into the ROS Parameter Server -->
     <arg name="model" />
     <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/rbot.xacro'" />
+
     <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model rbot -param robot_description" />
 
@@ -22,6 +38,12 @@
         roachbot/joint_state_controller
         roachbot/rwheel
         roachbot/lwheel" />
+        <!--
+        <node name="joint_vel_service" pkg="chefbot_bringup" type="joints_frm_pid_vel.py" output="screen" />
+        -->
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+            <param name="publish_frequency" type="double" value="5.0" />
+        </node>
     </group>
 
     <node pkg="chefbot_navig_cpp" type="twist_to_motor" name="twist_to_motor" output="screen">
@@ -29,4 +51,6 @@
         <remap from="lwheel_vtarget" to="/roachbot/lwheel/command" />
     </node>
     <node pkg="chefbot_navig_cpp" type="diff_tf" name="diff_tf" output="screen" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find chefbot_bringup)/rviz/robot.rviz" />
+    <node name="steer" pkg="rqt_robot_steering" type="rqt_robot_steering"/>
 </launch>

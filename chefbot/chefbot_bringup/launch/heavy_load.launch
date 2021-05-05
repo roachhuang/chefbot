@@ -1,0 +1,6 @@
+<launch>
+<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+<node name="steer" pkg="rqt_robot_steering" type="rqt_robot_steering" />
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find chefbot_bringup)/rviz/robot.rviz" />
+</launch>

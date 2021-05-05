@@ -1,0 +1,5 @@
+<launch>
+<node name="launchpad_node" pkg="chefbot_bringup" type="launchpad_node.py">
+    <rosparam file="$(find chefbot_bringup)/param/board_config.yaml" command="load" />
+</node>
+</launch>
