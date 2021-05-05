@@ -8,14 +8,6 @@
   <xacro:include filename="$(find chefbot_description)/urdf/common_properties.urdf.xacro" />
   <xacro:include filename="$(find chefbot_description)/urdf/chefbot_properties.urdf.xacro" />
   <xacro:include filename="$(find chefbot_description)/urdf/materials.xacro" />
-  
-  <xacro:macro name="default_inertial" params="z_value i_value mass">
-    <inertial>
-      <origin xyz="0 0 ${z_value}" rpy="0 0 0" />
-      <mass value="${mass}" />
-      <inertia ixx="${i_value}" ixy="0.0" ixz="0.0" iyy="${i_value}" iyz="0.0" izz="${i_value}" />
-    </inertial>
-  </xacro:macro>
 
   <!-- Need changes in chefbot base and circle -->
 
