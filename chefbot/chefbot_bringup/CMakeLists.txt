@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   move_base_msgs
   nav_msgs  
-  openni_launch
+  ## openni_launch
   robot_pose_ekf
   robot_state_publisher
   roscpp

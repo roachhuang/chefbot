@@ -48,16 +48,14 @@ MyRobot::MyRobot(ros::NodeHandle &nh) : nh_(nh)
 	// return true;
 }
 
-/*
-void MyRobot::lwheel_cb(const std_msgs::Int32& msg) {
-	encoder_ticks[1] = msg.data;
+void MyRobot::lwheel_vel_cb(const std_msgs::Float32& msg) {
+	lWheelVel = (double)msg.data;
 	//ROS_DEBUG_STREAM_THROTTLE(1, "Left encoder ticks: " << msg.data);
 }
-void MyRobot::rwheel_cb(const std_msgs::Int32& msg) {
-	encoder_ticks[0] = msg.data;
+void MyRobot::rwheel_vel_cb(const std_msgs::Float32& msg) {
+	rWheelVel = (double)msg.data;
 	// ROS_DEBUG_STREAM_THROTTLE(1, "Left encoder ticks: " << msg.data);
 }
-*/
 
 bool MyRobot::init(ros::NodeHandle &nh)
 {
@@ -65,7 +63,11 @@ bool MyRobot::init(ros::NodeHandle &nh)
 	vl_pub = nh.advertise<std_msgs::Float32>("left_wheel_speed", 10);
 	vr_pub = nh.advertise<std_msgs::Float32>("right_wheel_speed", 10);
 	// vr_pub = nh.advertise<std_msgs::Float32>("/vr", 10);
-	client = nh.serviceClient<chefbot_bringup::joint_state>("/read_joint_state");
+
+	// client = nh.serviceClient<chefbot_bringup::joint_state>("/read_joint_state");
+
+    rwheel_vel_sub = nh.subscribe("/rwheel_vel", 10, &MyRobot::rwheel_vel_cb, this);
+	lwheel_vel_sub = nh.subscribe("/lwheel_vel", 10, &MyRobot::lwheel_vel_cb, this);
 
 	// coz cb type is a class method https://wiki.ros.org/roscpp/Overview/Publishers%20and%20Subscribers
 	// left_encoder_sub = nh.subscribe("/lwheel", 1, &MyRobot::lwheel_cb, this);
@@ -92,6 +94,8 @@ double MyRobot::ticksToRad(const int32_t &ticks)
 
 void MyRobot::read(ros::Time time, ros::Duration period)
 {
+	vel[0]=MyRobot::rWheelVel;
+	vel[1]=MyRobot::lWheelVel;
 	/*
 	ros::Duration elapsed_time = period;
 	double wheel_angles[2];
@@ -110,6 +114,8 @@ void MyRobot::read(ros::Time time, ros::Duration period)
 	}
 	ROS_INFO("pos/vel:: %.2f, %.2f, left: %.2f, %2f",pos[0], vel[0], pos[1], vel[1]);			
 	*/
+
+	/*
 	if (client.call(joint_read))
 	{
 		pos[0] = joint_read.response.pos1;
@@ -126,6 +132,7 @@ void MyRobot::read(ros::Time time, ros::Duration period)
 		pos[2] = {0};
 		vel[2] = {0};
 	}
+	*/
 }
 
 // to do: stop motor if no push from twist_to_motor, otherwise pid goes crazy

@@ -10,8 +10,8 @@
 #include <std_msgs/Float32.h>
 
 // #include <rospy_tutorials/Floats.h>
-#include <chefbot_bringup/joint_state.h>
-#include <angles/angles.h>
+// #include <chefbot_bringup/joint_state.h>
+// #include <angles/angles.h>
 
 class MyRobot : public hardware_interface::RobotHW
 {
@@ -20,6 +20,8 @@ public:
 	MyRobot(ros::NodeHandle& nh);
 	void write(ros::Time time, ros::Duration period);
 	void read(ros::Time time, ros::Duration period);
+	double rWheelVel;
+	double lWheelVel;
 
 private:
 	// void lwheel_cb(const std_msgs::Int32& msg);
@@ -58,12 +60,12 @@ private:
 	// ros::Publisher motor_cmd_pub;
 	//ros::Subscriber left_encoder_sub;
 	//ros::Subscriber right_encoder_sub;
-	//ros::Subscriber lwheel_vel_sub;
-	//ros::Subscriber rwheel_vel_sub;
+	ros::Subscriber lwheel_vel_sub;
+	ros::Subscriber rwheel_vel_sub;
 
 	ros::ServiceClient client;
 	// rospy_tutorials::Floats joints_pub;
-	chefbot_bringup::joint_state joint_read;
+	// chefbot_bringup::joint_state joint_read;
 	ros::NodeHandle nh_;
 };
 
