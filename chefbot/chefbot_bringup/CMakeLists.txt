@@ -8,7 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   controller_manager  
   hardware_interface
   actionlib
-  depthimage_to_laserscan
+  #depthimage_to_laserscan
   geometry_msgs
   move_base_msgs
   nav_msgs  
