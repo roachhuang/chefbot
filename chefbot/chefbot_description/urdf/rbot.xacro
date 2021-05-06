@@ -8,7 +8,7 @@
 -->
     <xacro:include filename="$(find chefbot_description)/urdf/chefbot_properties.urdf.xacro" />
     <xacro:include filename="$(find chefbot_description)/urdf/materials.xacro" />
-    <xacro:include filename="$(find chefbot_description)/urdf/rbot.gazebo" />
+    <!-- <xacro:include filename="$(find chefbot_description)/urdf/rbot.gazebo" /> -->
     <xacro:include filename="$(find chefbot_description)/urdf/macros.xacro" />
 
     <link name="base_footprint" />

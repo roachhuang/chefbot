@@ -13,7 +13,7 @@
     <arg name="model" />
     <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/rbot.xacro'" />
     <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model rbot -param robot_description" />
+    <!-- <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model rbot -param robot_description" /> -->
 
     <group>
         <rosparam file="$(find chefbot_bringup)/config/controllers.yaml" command="load" />
