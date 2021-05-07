@@ -1,6 +1,20 @@
 <launch>
-<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
 
-<node name="steer" pkg="rqt_robot_steering" type="rqt_robot_steering" />
-<node name="rviz" pkg="rviz" type="rviz" args="-d $(find chefbot_bringup)/rviz/robot.rviz" />
+    <node name="steer" pkg="rqt_robot_steering" type="rqt_robot_steering" />
+        
+    <arg name="scan_topic" default="/scan" />
+    <arg name="odom_topic" default="/odom" />
+    <!-- <include file="$(find chefbot_bringup)/launch/includes/gmapping.launch.xml"/> -->    
+    
+    <node pkg='gmapping' type='slam_gmapping' name='slam_gmapping' output='screen'>
+        <param name='base_frame' value='base_footprint' />
+        <param name='odom_frame' value='odom' />
+        <param name='maxUrange' value='3.5' />
+        <param name='maxRange' value='3.5' />
+        <param name='particles' value='100' />
+    </node>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find chefbot_bringup)/rviz/robot.rviz" />
+
 </launch>

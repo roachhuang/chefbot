@@ -177,7 +177,7 @@
     <xacro:joint_wheel name="left_wheel_joint" parent="left_axle_link" child="left_wheel_link" origin_xyz="0 0 0" />
 
     <xacro:link_wheel lr="right" flipY="1" />
-    <xacro:joint_wheel name="right_wheel_joint" parent="right_axle_link" child="right_wheel_link" origin_xyz="0 -0.01905 0" />
+    <xacro:joint_wheel name="right_wheel_joint" parent="right_axle_link" child="right_wheel_link" origin_xyz="0 0 0" />
 
     <!-- transmission -->
     <transmission name="left_wheel_joint_trans">
