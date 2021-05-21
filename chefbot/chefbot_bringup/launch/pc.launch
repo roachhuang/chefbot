@@ -1,4 +1,10 @@
 <launch>
+    <!-- Load the URDF into the ROS Parameter Server -->
+    <arg name="gazebo" default='false'/>
+    
+    <param name="robot_description" command="$(find xacro)/xacro '$(find mybot_description)/urdf/kbot.xacro'" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find chefbot_bringup)/rviz/robot.rviz" />
+
     <!-- these are the arguments you can pass this launch file, for example paused:=true -->
     <arg name="paused" default="false" />
     <arg name="use_sim_time" default="true" />
@@ -6,14 +12,18 @@
     <arg name="headless" default="false" />
     <arg name="debug" default="false" />
 
-    <!-- We resume the logic in empty_world.launch -->
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="debug" value="$(arg debug)" />
-        <arg name="gui" value="$(arg gui)" />
-        <arg name="paused" value="$(arg paused)" />
-        <arg name="use_sim_time" value="$(arg use_sim_time)" />
-        <arg name="headless" value="$(arg headless)" />
-    </include>
+    <group if="$(eval arg('gazebo')== 'true')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="debug" value="$(arg debug)" />
+            <arg name="gui" value="$(arg gui)" />
+            <arg name="paused" value="$(arg paused)" />
+            <arg name="use_sim_time" value="$(arg use_sim_time)" />
+            <arg name="headless" value="$(arg headless)" />
+        </include>
+        <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+        <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model kbot -param robot_description" />
+    </group>
+
     <rosparam param="base_width">0.186</rosparam>
     <rosparam param="ticks_meter">4504</rosparam>
 
@@ -23,14 +33,6 @@
         <rosparam file="$(find chefbot_bringup)/param/board_config.yaml" command="load" />
     </node>
 -->
-
-    <!-- Load the URDF into the ROS Parameter Server -->
-    <arg name="model" />
-    <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/rbot.xacro'" />
-
-    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model rbot -param robot_description" />
-
     <group>
         <rosparam file="$(find chefbot_bringup)/config/controllers.yaml" command="load" />
         <node name="robot_hardware_interface" pkg="chefbot_bringup" type="mbot" output="screen" />
@@ -51,6 +53,5 @@
         <remap from="lwheel_vtarget" to="/roachbot/lwheel/command" />
     </node>
     <node pkg="chefbot_navig_cpp" type="diff_tf" name="diff_tf" output="screen" />
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find chefbot_bringup)/rviz/robot.rviz" />
-    <node name="steer" pkg="rqt_robot_steering" type="rqt_robot_steering"/>
+    <node name="steer" pkg="rqt_robot_steering" type="rqt_robot_steering" />
 </launch>

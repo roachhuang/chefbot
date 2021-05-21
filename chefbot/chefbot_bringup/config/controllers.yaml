@@ -14,6 +14,7 @@ roachbot:
     # Velocity Controllers ---------------------------------------
     rwheel:
       type: effort_controllers/JointVelocityController
+      # type: effort_controllers/JointEffortController (no pid)
       joint: right_wheel_joint
       # these PID coffections are tunned and perfectly work btw 0.3 rad/s to 9 rad/s
       #pid: {p: 1.7, i: 0.0006, d: 0, i_clamp_min: -100.0, i_clamp_max: 100, antiwindup: True}

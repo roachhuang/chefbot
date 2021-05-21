@@ -59,7 +59,7 @@
       <joint name="${fb}_${lr}_wheel_joint" />
       <actuator name="${fb}_${lr}_wheel_joint_motor">
         <hardwareInterface>EffortJointInterface</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>10</mechanicalReduction>
       </actuator>
     </transmission>
    

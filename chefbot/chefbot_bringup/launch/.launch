@@ -1,0 +1,23 @@
+<launch>
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find chefbot_bringup)/config/kbot_controller.yaml" command="load"/>
+  
+    <!-- load the controllers -->
+    <node name="controller_spawner"
+      pkg="controller_manager"
+      type="spawner" respawn="false"
+      output="screen" ns="/kbot"
+      args="joint_state_controller
+        rightWheel_effort_controller
+        leftWheel_effort_controller"
+    />
+  
+  
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+      <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/kbot.xacro'" />
+      <remap from="/joint_states" to="/kbot/joint_states" />
+    </node>
+  
+  </launch>

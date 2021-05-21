@@ -1,13 +1,12 @@
 <launch>
 <!-- This allows you to see the robot model without starting it up.  -->
-<!-- URDF model -->
-<arg name="model" default="chefbot_base.urdf"/>
-<param name="robot_description" textfile="$(find chefbot_description)/urdf/$(arg model)" />
-
-<!--
-  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find chefbot_description)/urdf/chefbot_base.xacro'" />
-  <param name="robot_description" command="$(find xacro)/xacro $(arg urdf_file)" />
+<!-- URDF model 
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find mybot_description)/urdf/kbot.xacro'" />  
 -->
+<arg name="urdf_file" default="$(find xacro)/xacro.py '$(find chefbot_description)/urdf/diff_wheeled_robot_with_laser.xacro'" />
+  <param name="robot_description" command="$(arg urdf_file)" />
+
+<node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" ></node> 
 
 <!-- The robot_state_publisher publishes the joints, otherwise your model is a pile white shapes all originating from 0, 0, 0 :) -->
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">

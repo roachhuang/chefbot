@@ -13,7 +13,7 @@
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "editor.colorDecorators": false,
-    "editor.columnSelection": false,
+    //"editor.columnSelection": false,
     "editor.semanticHighlighting.enabled": true,
     "python.pythonPath": "/usr/bin/python"
 }

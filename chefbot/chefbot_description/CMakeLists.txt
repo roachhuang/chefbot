@@ -7,11 +7,13 @@ project(chefbot_description)
 find_package(catkin REQUIRED COMPONENTS
   urdf
   xacro
-  kobuki_description
+  gazebo_ros
+  # kobuki_description
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+find_package(gazebo REQUIRED)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -80,6 +82,11 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
+  DEPENDS
+    gazebo_ros
+  CATKIN_DEPENDS
+  INCLUDE_DIRS
+  LIBRARIES  
 #  INCLUDE_DIRS include
 #  LIBRARIES chefbot_description
 #  CATKIN_DEPENDS urdf xacro

@@ -1,0 +1,32 @@
+digraph G {
+node [shape=box];
+"base_footprint" [label="base_footprint"];
+"base_link" [label="base_link"];
+"chefbot_caster_front_link" [label="chefbot_caster_front_link"];
+"chefbot_caster_back_link" [label="chefbot_caster_back_link"];
+"cliff_sensor_front_link" [label="cliff_sensor_front_link"];
+"cliff_sensor_left_link" [label="cliff_sensor_left_link"];
+"cliff_sensor_right_link" [label="cliff_sensor_right_link"];
+"gyro_link" [label="gyro_link"];
+"left_wheel_link" [label="left_wheel_link"];
+"right_wheel_link" [label="right_wheel_link"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_footprint" -> "base_joint" [label="xyz: 0 0 0.04 \nrpy: 0 -0 0"]
+"base_joint" -> "base_link"
+"base_link" -> "caster_front_joint" [label="xyz: 0.115 0 0.007 \nrpy: -1.5708 0 0"]
+"caster_front_joint" -> "chefbot_caster_front_link"
+"base_link" -> "chefbot_caster_back_joint" [label="xyz: -0.135 0 0.009 \nrpy: -1.5708 0 0"]
+"chefbot_caster_back_joint" -> "chefbot_caster_back_link"
+"base_link" -> "cliff_sensor_front_joint" [label="xyz: 0.156 0 0.0214 \nrpy: 0 1.5708 -0"]
+"cliff_sensor_front_joint" -> "cliff_sensor_front_link"
+"base_link" -> "cliff_sensor_left_joint" [label="xyz: 0.08734 0.13601 0.0214 \nrpy: 0 1.5708 -0"]
+"cliff_sensor_left_joint" -> "cliff_sensor_left_link"
+"base_link" -> "cliff_sensor_right_joint" [label="xyz: 0.085 -0.13601 0.0214 \nrpy: 0 1.5708 -0"]
+"cliff_sensor_right_joint" -> "cliff_sensor_right_link"
+"base_link" -> "gyro_joint" [label="xyz: 0.056 0.062 0.0202 \nrpy: 0 -0 0"]
+"gyro_joint" -> "gyro_link"
+"base_link" -> "left_wheel_joint" [label="xyz: 0 0.035 0 \nrpy: 0 -0 0"]
+"left_wheel_joint" -> "left_wheel_link"
+"base_link" -> "right_wheel_joint" [label="xyz: 0 -0.035 0 \nrpy: 0 -0 0"]
+"right_wheel_joint" -> "right_wheel_link"
+}

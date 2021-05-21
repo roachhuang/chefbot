@@ -8,11 +8,11 @@ find_package(catkin REQUIRED COMPONENTS
   depthimage_to_laserscan
   diagnostic_aggregator
   gazebo_ros
-  kobuki_gazebo_plugins
+  #kobuki_gazebo_plugins
   robot_pose_ekf
   robot_state_publisher
   xacro
-  yocs_cmd_vel_mux
+  #yocs_cmd_vel_mux
   
 )
 

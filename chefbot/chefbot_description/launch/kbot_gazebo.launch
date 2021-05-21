@@ -1,0 +1,20 @@
+<launch>
+    <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
+    <param name="robot_description" command="$(find xacro)/xacro $(find chefbot_description)/urdf/diff_wheeled_robot_with_laser.xacro" />
+
+     <!--RViz-->
+    <node name="rviz" pkg="rviz" type="rviz" required="true" />
+    
+    <!--Gazebo empty world launch file-->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find chefbot_description)/worlds/test.world" />
+        <arg name="gui" value="true" />
+    </include>
+
+    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output='screen' args="-urdf -param robot_description -model diff_wheeled_robot" />
+
+    <!-- ros_control kbot launch file. w/ this file kbot can move in gazebo-->
+    <include file="$(find chefbot_bringup)/launch/kbot_control.launch" />
+
+</launch>

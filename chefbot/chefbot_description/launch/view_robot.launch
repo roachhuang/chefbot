@@ -1,12 +1,10 @@
 <launch>
 
-
-  <include file="$(find chefbot_description)/launch/upload_model.launch" />
-
+  <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/diff_wheeled_robot.xacro'" />
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" args="_use_gui:=True" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
 
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find chefbot_description)/rviz/robot.rviz" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find chefbot_description)/rviz/robot.rviz" required='true' />
 
 </launch>

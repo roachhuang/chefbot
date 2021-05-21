@@ -1,6 +1,0 @@
-<launch>
-
-  <!-- Robot description -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find chefbot_description)/urdf/chefbot_gazebo.urdf.xacro'" />
-
-</launch>
