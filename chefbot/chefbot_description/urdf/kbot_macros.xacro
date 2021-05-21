@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="roachbot">
+    <xacro:macro name="default_inertial" params="z_value i_value mass">
+        <inertial>
+            <origin xyz="0 0 ${z_value}" rpy="0 0 0" />
+            <mass value="${mass}" />
+            <inertia ixx="${i_value}" ixy="0.0" ixz="0.0" iyy="${i_value}" iyz="0.0" izz="${i_value}" />
+        </inertial>
+    </xacro:macro>
+    <xacro:macro name="box_inertia" params="m w h d">
+        <inertial>
+            <mass value="${m}" />
+            <inertia ixx="${m / 12.0 * (d*d + h*h)}" ixy="0.0" ixz="0.0" iyy="${m / 12.0 * (w*w + h*h)}" iyz="0.0" izz="${m / 12.0 * (w*w + d*d)}" />
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="cylinder_inertia" params="m r h">
+        <inertial>
+            <mass value="${m}" />
+            <inertia ixx="${m*(3*r*r+h*h)/12}" ixy="0" ixz="0" iyy="${m*(3*r*r+h*h)/12}" iyz="0" izz="${m*r*r/2}" />
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="sphere_inertia" params="m r">
+        <inertial>
+            <mass value="${m}" />
+            <inertia ixx="${2*m*(r*r)/5.0}" ixy="0.0" ixz="0.0" iyy="${2.0*m*(r*r)/5.0}" iyz="0.0" izz="${2.0*m*(r*r)/5.0}" />
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="wheel" params="prefix reflect">
+        <link name="${prefix}_wheel_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
+                <geometry>
+                    <cylinder radius="${wheel_radius}" length="${wheel_thick}" />
+                </geometry>
+                <material name="black" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0 " rpy="${M_PI_2} 0 0" />
+                <geometry>
+                    <cylinder radius="${wheel_radius}" length="${wheel_thick}" />
+                </geometry>
+            </collision>
+            <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_radius}" h="${wheel_thick}" />
+        </link>
+
+        <joint name="${prefix}_wheel_joint" type="continuous">
+            <axis xyz="0 1 0" rpy="0 0 0" />
+            <parent link="base_link" />
+            <child link="${prefix}_wheel_link" />
+            <origin xyz="0 ${reflect*(base_radius+base_wheel_gap)} 0" rpy="0 0 0" />
+            <joint_properties damping="1.0" friction="1.0" />
+        </joint>
+
+        <xacro:if value="${gazebo == 'true'}">
+            <gazebo reference="${prefix}_wheel_link">
+                <mu1 value="1.0" />
+                <mu2 value="1.0" />
+                <kp value="10000000.0" />
+                <kd value="0.0" />
+                <fdir1 value="1 0 0" />
+                <material>Gazebo/FlatBlack</material>
+            </gazebo>
+
+            <transmission name="${prefix}_trans">
+                <type>transmission_interface/SimpleTransmission</type>
+                <joint name="${prefix}_wheel_joint">
+                    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                </joint>
+                <actuator name="${prefix}Motor">
+                    <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+                    <mechanicalReduction>1</mechanicalReduction>
+                </actuator>
+            </transmission>
+        </xacro:if>
+
+    </xacro:macro>
+
+    <!--    
+    <xacro:macro name="joint_wheel" params="name child parent origin_xyz">
+        <joint name="${name}" type="continuous">
+            <origin rpy="0 0 0" xyz="${origin_xyz}" />
+            <child link="${child}" />
+            <parent link="${parent}" />
+            <axis rpy="0 0 0" xyz="0 1 0" />
+            <limit effort="100" velocity="100" />
+            <joint_properties damping="0.0" friction="0.0" />
+        </joint>
+    </xacro:macro>
+-->
+    <!--
+    <xacro:macro name="link_wheel" params="lr flipY">
+        <link name="${lr}_wheel_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="${flipY*M_PI/2} 0 0" />
+                <geometry>
+                    <cylinder radius="0.045" length="0.02"/>                    
+                </geometry>
+                <material name="black" />
+            </visual>
+            <cylinder_inertia m="10" r="${wheel_radius}" h="0.005"/>
+            <collision>
+                <origin xyz="0 0 0" rpy="${flipY*M_PI/2} 0 0" />
+                <geometry>
+                    <cylinder radius="${wheel_radius}" length="0.028" />
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+-->
+
+</robot>
