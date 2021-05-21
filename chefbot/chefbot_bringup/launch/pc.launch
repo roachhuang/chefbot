@@ -44,7 +44,8 @@
         <node name="joint_vel_service" pkg="chefbot_bringup" type="joints_frm_pid_vel.py" output="screen" />
         -->
         <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-            <param name="publish_frequency" type="double" value="5.0" />
+            <param name="robot_description" command="$(find xacro)/xacro '$(find mybot_description)/urdf/kbot.xacro'" />
+            <!-- <remap from='/joint_states' to='/roachbot/joint_states'/> -->
         </node>
     </group>
 
