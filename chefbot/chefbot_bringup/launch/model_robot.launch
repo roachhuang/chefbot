@@ -1,7 +1,7 @@
 <launch>
 <!-- This allows you to see the robot model without starting it up.  -->
 <!-- URDF model 
-  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find mybot_description)/urdf/kbot.xacro'" />  
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find chefbot_description)/urdf/kbot.xacro'" />  
 -->
 <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find chefbot_description)/urdf/diff_wheeled_robot_with_laser.xacro'" />
   <param name="robot_description" command="$(arg urdf_file)" />

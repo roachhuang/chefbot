@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="kbot">
 
-  <xacro:include filename="$(find mybot_description)/urdf/properties.xacro" />
-  <xacro:include filename="$(find mybot_description)/urdf/materials.xacro" />
-  <xacro:include filename="$(find mybot_description)/urdf/kbot_macros.xacro" />
+  <xacro:include filename="$(find chefbot_description)/urdf/properties.xacro" />
+  <xacro:include filename="$(find chefbot_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find chefbot_description)/urdf/kbot_macros.xacro" />
   <xacro:if value="${gazebo == 'true'}">
-    <xacro:include filename="$(find mybot_description)/urdf/kbot.gazebo" />
+    <xacro:include filename="$(find chefbot_description)/urdf/kbot.gazebo" />
   </xacro:if>
 
   <!-- The physic engine does not accept a base_link with inertia. It is then useful to
