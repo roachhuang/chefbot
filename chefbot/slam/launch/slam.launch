@@ -1,0 +1,19 @@
+<launch>       
+
+    <include file="$(find chefbot_bringup)/launch/pi.launch"></include>
+
+    <!-- model: 360 Laser Distance Sensor LDS-01. it supports usb interface (USB2LDS) 
+        current consumption: 400mA or less
+        detection distance 120mm ~ 3,500mm
+        sampling rate: 1.8khz
+        dimension: 7 x 10 x 40mm (w x d x h)
+        mass： 125g
+        sacn rate: 300 rpm (+/- 10)
+        angular resolution 1 degree
+    -->
+    <node pkg="hls_lfcd_lds_driver" type="hlds_laser_publisher" name="hlds_laser_publisher" output="screen">
+        <param name="port" value="/dev/ttyUSB1" />
+        <param name="frame_id" value="base_footprint" />
+    </node>
+    
+</launch>
