@@ -7,7 +7,13 @@ project(nav)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+    roscpp
+    move_base_msgs
+    nav_msgs 
+    std_msgs
+    tf
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -112,8 +118,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
-# ${catkin_INCLUDE_DIRS}
+ include
+ ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -130,8 +136,8 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/nav_node.cpp)
-add_executable(src/send_goals.cpp)
-add_executable(src/send_robot_goal.cpp)
+# add_executable(send_goals src/send_goals.cpp)
+# add_executable(send_robot_goal src/send_robot_goal.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -147,7 +153,7 @@ add_executable(src/send_robot_goal.cpp)
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(sendGoals ${catkin_LIBRARIES})
+#target_link_libraries(send_goals ${catkin_LIBRARIES})
 
 #############
 ## Install ##

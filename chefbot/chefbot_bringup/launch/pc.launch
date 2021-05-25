@@ -1,7 +1,7 @@
 <launch>
     <!-- Load the URDF into the ROS Parameter Server -->
-    <arg name="gazebo" default='false'/>
-    
+    <arg name="gazebo" default='false' />
+
     <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/kbot.xacro'" />
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find chefbot_bringup)/rviz/robot.rviz" />
 
@@ -42,11 +42,11 @@
         roachbot/lwheel" />
         <!--
         <node name="joint_vel_service" pkg="chefbot_bringup" type="joints_frm_pid_vel.py" output="screen" />
-        -->
+        
         <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-            <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/kbot.xacro'" />
-            <!-- <remap from='/joint_states' to='/roachbot/joint_states'/> -->
+            <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/kbot.xacro'" />            
         </node>
+    -->
     </group>
 
     <node pkg="chefbot_navig_cpp" type="twist_to_motor" name="twist_to_motor" output="screen">

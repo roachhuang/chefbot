@@ -22,8 +22,7 @@ from std_msgs.msg import Int64, Float32, String, Header
 from sensor_msgs.msg import Imu
 
 #Class to handle serial data from Launchpad and converted to ROS topics
-class Launchpad_Class(object):
-	
+class Launchpad_Class(object):	
 	def __init__(self):
 		print "Initializing Launchpad Class"
 
@@ -52,7 +51,7 @@ class Launchpad_Class(object):
 
 		self.robot_heading = 0
 #######################################################################################################################
-		#Get serial port and baud rate of Tiva C Launchpad
+		#Get serial port and baud rate of Tiva C Launchpad		
 		port = rospy.get_param("~port", "/dev/ttyUSB0")
 		baudRate = int(rospy.get_param("~baudRate", 115200))
 
@@ -125,7 +124,8 @@ class Launchpad_Class(object):
 	def _Update_Left_Speed(self, left_speed):
 		self._left_wheel_speed_ = left_speed.data
 		rospy.loginfo(left_speed.data)
-		speed_message = 's %d %d\r' %(int(self._left_wheel_speed_),int(self._right_wheel_speed_))
+		#speed_message = 's %f %f\r' %(int(self._left_wheel_speed_),int(self._right_wheel_speed_))
+		speed_message = 's %f %f\r' self._left_wheel_speed_, self._right_wheel_speed_)
 		self._WriteSerial(speed_message)
 
 #######################################################################################################################################################3
@@ -133,7 +133,7 @@ class Launchpad_Class(object):
 	def _Update_Right_Speed(self, right_speed):
 		self._right_wheel_speed_ = right_speed.data
 		rospy.loginfo(right_speed.data)
-		speed_message = 's %d %d\r' %(int(self._left_wheel_speed_),int(self._right_wheel_speed_))
+		speed_message = 's %f %f\r' self._left_wheel_speed_, self._right_wheel_speed_)
 		self._WriteSerial(speed_message)
 
 #######################################################################################################################

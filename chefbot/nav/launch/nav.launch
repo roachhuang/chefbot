@@ -10,8 +10,9 @@
   </include>
   -->
 
-  <!-- Map server -->
+  <!-- Map server 
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" output='screen' />
+  -->
 
   <!-- AMCL -->
   <include file="$(find nav)/launch/amcl.launch" />

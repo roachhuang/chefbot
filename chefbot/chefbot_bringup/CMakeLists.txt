@@ -121,7 +121,6 @@ include_directories(
 # )
 
 ## Declare a cpp executable
-#add_executable(mbot src/mbot.cpp send_goal src/send_robot_goal.cpp)
 add_executable(mbot src/mbot.cpp)
 
 ## Add cmake target dependencies of the executable/library

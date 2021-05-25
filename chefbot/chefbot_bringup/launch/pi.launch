@@ -1,4 +1,6 @@
 <launch>
+    <include file="$(find chefbot_bringup)/launch/hub.launch"/>
+
     <!-- these are the arguments you can pass this launch file, for example paused:=true -->
     
     <rosparam param="base_width">0.186</rosparam>
