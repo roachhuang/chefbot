@@ -56,4 +56,5 @@
     <!-- Other tools can request additional information be placed here -->
 
   </export>
+  <depend>sensor_msgs</depend>
 </package>

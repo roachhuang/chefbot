@@ -11,7 +11,7 @@ world_frame: odom           # Defaults to the value of odom_frame if unspecified
 
 odom0: /odom # Fill in the correct topic here!
 #odom1: odom1_topic/odom # Make sure it's of the correct message type!
-odom0_config: [true, true, false,   # x, y, z
+odom0_config: [false, false, false,   # x, y, z
                false, false, true,    # roll, pitch, yaw
                true, true, false,     # x vel, y vel, z vel
                false, false, true,    # roll vel, pitch vel, yaw vel

@@ -1,5 +1,5 @@
 <!-- load the map file inot map_server -->
 <launch>
     <arg name="map_file" value="$(find load_map)/map/kbot.yaml"/>
-    <node pkg="map_server" type="map_server" name="map_server" args="$(arg map_file)"/> 
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/> 
 </launch>

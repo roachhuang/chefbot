@@ -120,3 +120,5 @@ cmd: h/w interface write method
 1. hub.launch
 2. pc or pi.launch
 3. heavy_load.launch
+
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
