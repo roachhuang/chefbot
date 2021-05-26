@@ -122,3 +122,19 @@ cmd: h/w interface write method
 3. heavy_load.launch
 
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+
+the ~ (tilde) at the beginning of the parameter name indicates that this is a private name specic to one node. Perhaps the easiest way to assign such a parameter is to include it between the node tags in a launch
+
+1. unplug arduino and lidar cables
+2. power on pi4
+3. ssh pi4 (to make sure pi4 is on)
+4. connect arduino cable and trun on the motor power
+5. launch hub.launch and echo lwheel topic on pc to make sure hub working
+6. launch pi.launch 
+7. launch heavy_load from pc to test motors
+
+8. // Navigation // 
+9. kill heavy_load session
+10. connect lidar cable to pi4 (make sure it starts to spin)
+11. launch lidar from pi4
+12. launch nav from pc
