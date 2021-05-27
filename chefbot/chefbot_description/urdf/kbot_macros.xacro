@@ -75,7 +75,32 @@
                 </actuator>
             </transmission>
         </xacro:if>
+    </xacro:macro>
 
+    <xacro:macro name="caster" params="prefix reflect">
+        <link name="${prefix}_caster_wheel">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <sphere radius="${caster_wheel_radius}" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <sphere radius="${caster_wheel_radius}" />
+                </geometry>
+            </collision>
+            <xacro:sphere_inertia m="${caster_wheel_mass}" r="${caster_wheel_radius}" />
+        </link>
+
+        <joint name="${prefix}_caster_wheel_joint" type="fixed">
+            <axis xyz="0 1 0" rpy="0 0 0" />
+            <parent link="base_link" />
+            <child link="${prefix}_caster_wheel" />
+            <origin xyz="${reflect*caster_wheel_joint_offset} 0 -${caster_wheel_radius}" rpy="0 0 0" />
+        </joint>
     </xacro:macro>
 
     <!--    
