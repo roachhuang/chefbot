@@ -24,8 +24,8 @@
         <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model kbot -param robot_description" />
     </group>
 
-    <rosparam param="base_width">0.186</rosparam>
-    <rosparam param="ticks_meter">4504</rosparam>
+    <param name="base_width" type='double' value='0.186'/>
+    <param name="ticks_meter" value='4504'/>
 
     <!--
 	<arg name="node_start_delay" default="5" /> 

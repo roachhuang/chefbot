@@ -3,8 +3,8 @@
 
     <!-- these are the arguments you can pass this launch file, for example paused:=true -->
     
-    <rosparam param="base_width">0.186</rosparam>
-    <rosparam param="ticks_meter">4504</rosparam>
+    <param name="base_width" type='double' value='0.186'/>
+    <param name="ticks_meter" value='4504'/>
 
     <!-- Load the URDF into the ROS Parameter Server -->
     
