@@ -6,6 +6,7 @@
 MyRobot::MyRobot(ros::NodeHandle &nh) : nh_(nh)
 {
 	ROS_INFO("Initializing roachbot Hardware Interface ...");
+
 	// num_joints_ = joint_names_.size();
 	//ROS_INFO("Number of joints: %d", (int)num_joints_);
 
@@ -39,9 +40,19 @@ MyRobot::MyRobot(ros::NodeHandle &nh) : nh_(nh)
 	effort_joint_interface.registerHandle(effort_handle_a);
 	hardware_interface::JointHandle effort_handle_b(jnt_state_interface.getHandle("left_wheel_joint"), &cmd[1]);
 	effort_joint_interface.registerHandle(effort_handle_b);
+
+	// Create Joint Limit interface for the two joints
+    joint_limits_interface::getJointLimits("left_wheel_joint", nh_, limits);
+    joint_limits_interface::EffortJointSaturationHandle jointLimitsHandleA(effort_handle_a, limits);
+    effortJointSaturationInterface.registerHandle(jointLimitsHandleA);  
+    joint_limits_interface::getJointLimits("right_wheel_joint", nh_, limits);
+    joint_limits_interface::EffortJointSaturationHandle jointLimitsHandleB(effort_handle_b, limits);
+    effortJointSaturationInterface.registerHandle(jointLimitsHandleB);
+
 	// Register the JointEffortInterface containing the read/write joints
 	// with this robot's hardware_interface::RobotHW.
 	registerInterface(&effort_joint_interface);
+	registerInterface(&effortJointSaturationInterface);
 
 	init(nh_);
 	// client = nh_.serviceClient<diff_drive::joint_state>("/read_joint_state");

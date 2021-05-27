@@ -16,6 +16,7 @@
 
     <group>
         <rosparam file="$(find chefbot_bringup)/config/controllers.yaml" command="load" />
+        <rosparam file="$(find chefbot_bringup)/config/joint_limits.yaml" command="load"/>
         <node name="robot_hardware_interface" pkg="chefbot_bringup" type="mbot" output="screen" />
         <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="
         roachbot/joint_state_controller
