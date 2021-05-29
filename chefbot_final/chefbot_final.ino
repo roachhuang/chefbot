@@ -190,11 +190,11 @@ void Setup_MPU6050_DMP()
 {
   //DMP Initialization
   devStatus = accelgyro.dmpInitialize();
-
-  accelgyro.setXGyroOffset(220);
-  accelgyro.setXGyroOffset(76);
-  accelgyro.setXGyroOffset(-85);
-  accelgyro.setXGyroOffset(1788);
+  // get this calibration params from file->example->mpu6050->Imu_Zero
+  accelgyro.setXGyroOffset(-3954);
+  accelgyro.setYGyroOffset(269);
+  accelgyro.setZGyroOffset(599);
+  accelgyro.setZAccelOffset(-9);  
 
   if (devStatus == 0) {
     accelgyro.setDMPEnabled(true);
