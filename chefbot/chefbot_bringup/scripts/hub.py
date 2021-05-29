@@ -8,7 +8,7 @@ Some portion borrowed from  Rainer Hessmer blog
 http://www.hessmer.org/blog/
 """
 
-import math
+# import math
 # import sys
 import time
 
@@ -90,19 +90,18 @@ class LaunchpadClass(object):
         self.orientation = 0.0
         self.cal_buffer = []
         self.cal_buffer_length = 1000
+
         self.imu_data = Imu(header=rospy.Header(frame_id="base_link"))
-        self.imu_data.orientation_covariance = [
-            1e6, 0, 0, 0, 1e6, 0, 0, 0, 1e-6]
-        self.imu_data.angular_velocity_covariance = [
-            1e6, 0, 0, 0, 1e6, 0, 0, 0, 1e-6]
-        #self.imu_data.linear_acceleration_covariance = [-1, 0, 0, 0, 0, 0, 0, 0, 0]
+        self.imu_data.orientation_covariance[0] = -1
+        self.imu_data.angular_velocity_covariance[0] = -1
+        self.imu_data.linear_acceleration_covariance[0] = -1
         self.gyro_measurement_range = 150.0
         self.gyro_scale_correction = 1.35
         self.imu_pub = rospy.Publisher('imu/data', Imu, queue_size=10)
 
+        """ what for? - figure it out
         self.deltat = 0
         self.lastUpdate = 0
-
         # New addon for computing quaternion
         self.pi = 3.14159
         self.GyroMeasError = float(self.pi * (40 / 180))
@@ -113,6 +112,7 @@ class LaunchpadClass(object):
 
         self.beta = math.sqrt(3 / 4) * self.GyroMeasError
         self.q = [1, 0, 0, 0]
+        """
 
         # Speed subscriber
         # combine 2 motors speed into one topic!
@@ -175,23 +175,23 @@ class LaunchpadClass(object):
                     self._qz_.publish(self._qz)
                     self._qw_.publish(self._qw)
                     """
-                    imu_msg = Imu()
+                    #imu_msg = Imu()
                     # h = Header()
-                    imu_msg.header.stamp = rospy.Time.now()
-                    imu_msg.header.frame_id = self.frame_id
+                    self.imu_data.header.stamp = rospy.Time.now()
+                    # imu_msg.header.frame_id = self.frame_id
                     #imu_msg.header = h
 
-                    imu_msg.orientation_covariance[0]=-1
-                    imu_msg.angular_velocity_covariance[0]=-1
-                    imu_msg.linear_acceleration_covariance[0] = -1
+                    #imu_msg.orientation_covariance[0]=-1
+                    #imu_msg.angular_velocity_covariance[0]=-1
+                    #imu_msg.linear_acceleration_covariance[0] = -1
                     # This represents an orientation in free space in quaternion form.
-                    imu_msg.orientation.x = self._qx
-                    imu_msg.orientation.y = self._qy
-                    imu_msg.orientation.z = self._qz
-                    imu_msg.orientation.w = self._qw
+                    self.imu_data.orientation.x = self._qx
+                    self.imu_data.orientation.y = self._qy
+                    self.imu_data.orientation.z = self._qz
+                    self.imu_data.orientation.w = self._qw
                     # imu_msg.linear_acceleration = Vector3(accelX*G, 0, 0)
                     # imu_msg.angular_velocity = Vector3(gyro[0]*DEG_2_RAD, )
-                    self.imu_pub.publish(imu_msg)
+                    self.imu_pub.publish(self.imu_data)
             except:
                 rospy.logwarn("Error in Sensor values")
                 rospy.logwarn(lineParts)
