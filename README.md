@@ -138,3 +138,8 @@ the ~ (tilde) at the beginning of the parameter name indicates that this is a pr
 10. connect lidar cable to pi4 (make sure it starts to spin)
 11. launch lidar from pi4
 12. launch nav from pc
+
+
+to do:
+    connect imu's ad0 to ground so it address will be fixed at 0x68
+    
