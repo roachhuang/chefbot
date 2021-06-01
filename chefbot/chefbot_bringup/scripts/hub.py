@@ -225,7 +225,7 @@ class LaunchpadClass(object):
         a = 3
 
 if __name__ == '__main__':
-    rospy.init_node('launchpad_ros', anonymous=True)
+    rospy.init_node('hub', anonymous=True)
     launchpad = LaunchpadClass()
     try:
         launchpad.Start()

@@ -66,6 +66,13 @@
     <parent link="base_link" />
     <child link="laser_link" />
   </joint>
+  <link name="imu"/>
+  <joint name="imu_joint" type="fixed">
+    <origin rpy="${pi} 0 0" xyz="-0.035.03 0.2"/>
+    <parent link="base_link" />
+    <child link="imu"/>
+  </joint>
+
   <!-- 
     <link name="camera">
       <collision>
