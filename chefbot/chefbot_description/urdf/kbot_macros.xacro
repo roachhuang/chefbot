@@ -28,7 +28,7 @@
         </inertial>
     </xacro:macro>
 
-    <xacro:macro name="wheel" params="prefix reflect">
+    <xacro:macro name="wheel" params="prefix y_reflect">
         <link name="${prefix}_wheel_link">
             <visual>
                 <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" />
@@ -50,8 +50,7 @@
             <axis xyz="0 1 0" rpy="0 0 0" />
             <parent link="base_link" />
             <child link="${prefix}_wheel_link" />
-            <origin xyz="0 ${reflect*(base_radius+base_wheel_gap)} 0" rpy="0 0 0" />
-            <joint_properties damping="1.0" friction="1.0" />
+            <origin xyz="0 ${y_reflect*(base_radius+wheel_yGap)} ${-wheel_zoff}" rpy="0 0 0" />          
         </joint>
 
         <xacro:if value="${gazebo == 'true'}">
@@ -77,29 +76,28 @@
         </xacro:if>
     </xacro:macro>
 
-    <xacro:macro name="caster" params="prefix reflect">
-        <link name="${prefix}_caster_wheel">
-            <visual>
-                <origin xyz="0 0 0" rpy="0 0 0" />
+    <xacro:macro name="caster" params="prefix x_reflect">
+        <link name="${prefix}_caster">
+            <visual>                
                 <geometry>
-                    <sphere radius="${caster_wheel_radius}" />
+                    <sphere radius="${caster_radius}" />
                 </geometry>
                 <material name="white" />
             </visual>
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
-                    <sphere radius="${caster_wheel_radius}" />
+                    <sphere radius="${caster_radius}" />
                 </geometry>
             </collision>
-            <xacro:sphere_inertia m="${caster_wheel_mass}" r="${caster_wheel_radius}" />
+            <xacro:sphere_inertia m="${caster_mass}" r="${caster_radius}" />
         </link>
 
-        <joint name="${prefix}_caster_wheel_joint" type="fixed">
+        <joint name="${prefix}_caster_joint" type="fixed">
             <axis xyz="0 1 0" rpy="0 0 0" />
             <parent link="base_link" />
-            <child link="${prefix}_caster_wheel" />
-            <origin xyz="${reflect*caster_wheel_joint_offset} 0 -${caster_wheel_radius}" rpy="0 0 0" />
+            <child link="${prefix}_caster" />
+            <origin xyz="${x_reflect*caster_xoff} 0 -${caster_radius}" rpy="0 0 0" />
         </joint>
     </xacro:macro>
 

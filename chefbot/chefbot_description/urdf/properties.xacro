@@ -17,6 +17,9 @@
    Should we be using base_footprint for this specification instead?
    Note: REP needs to be updated with the information below 
    (currently in development and awaiting feedback)
+
+   This urdf is referred to:
+   https://navigation.ros.org/setup_guides/urdf/setup_urdf.html
 -->
   
   <xacro:property name="gazebo" value="true" />
@@ -41,9 +44,7 @@
   <xacro:property name="base_height" value="0.01" />
   <xacro:property name="base_radius" value="0.07" />
   <xacro:property name="base_mass" value="4.0" /> <!-- in kg-->
-  <xacro:property name="wheel_separation" value="${2*(wheel_radius+0.5*wheel_thick)" />
-  <xacro:property name="wheel_thick" value="0.01" />
-  <xacro:property name="base_wheel_gap" value="${base_radius*0.12}" />
+  <xacro:property name="wheel_separation" value="${2*(wheel_radius+0.5*wheel_thick)" /> 
 
   <xacro:property name='lidar_mass' value='0.125'/>
   <xacro:property name='lidar_radius' value='0.03'/>
@@ -51,16 +52,15 @@
 
   <!-- Wheels -->
   <xacro:property name="wheel_radius" value="0.035" />
+  <xacro:property name="wheel_thick" value="0.01" />
   <xacro:property name="wheel_mass" value="0.5" /> <!-- in kg-->
+  <xacro:property name="wheel_yGap" value="${base_radius*0.12}" />  
+  <xacro:property name="wheel_zoff" value="${wheel_radius+base_height/2}"/>
+  <xacro:property name="wheel_xoff" value="0"/>
 
-  <xacro:property name="wheel_joint_offset" value="0.02" />
-  <xacro:property name="base_x_origin_to_wheel_origin" value="0.25" />
-  <xacro:property name="base_y_origin_to_wheel_origin" value="0.3" />
-  <xacro:property name="base_z_origin_to_wheel_origin" value="0.0" />
-
-  <xacro:property name="caster_wheel_radius" value="${wheel_radius*0.5}" />
-  <xacro:property name="caster_wheel_mass" value="0.1" />
-  <xacro:property name="caster_wheel_joint_offset" value="0.052" />
+  <xacro:property name="caster_xoff" value='${(base_radius-caster_radius)}'/>
+  <xacro:property name="caster_radius" value="${wheel_radius*0.5}" />
+  <xacro:property name="caster_mass" value="0.1" />
 
   <xacro:property name="cameraSize" value="0.05" />
   <xacro:property name="cameraMass" value="0.1" />
