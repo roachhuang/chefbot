@@ -44,7 +44,7 @@
   <!-- it will be easy to know which direction is front in rviz
   <xacro:caster prefix="rear" x_reflect="-1" />
   -->
-  <link name="laser_link">
+  <link name="lidar_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
@@ -54,10 +54,10 @@
     </visual>
     <xacro:cylinder_inertia m="${lidar_mass}" r="${lidar_radius}" h="${lidar_height}" />
   </link>
-  <joint name="laser_joint" type="fixed">
+  <joint name="lidar_joint" type="fixed">   
     <origin xyz="0 0 ${base_height+lidar_radius/4}" rpy="0 0 0" />
     <parent link="base_link" />
-    <child link="laser_link" />
+    <child link="lidar_link" />
   </joint>
 
   <link name="imu">
@@ -66,7 +66,7 @@
       <geometry>
         <box size="0.02 0.02 0.001" />
       </geometry>
-      <material name="red" />
+      <material name="green" />
     </visual>
   </link>
   <joint name="imu_joint" type="fixed">
@@ -76,7 +76,7 @@
   </joint>
 
   <!-- 
-    <link name="camera">
+    <link name="camera_link">
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
