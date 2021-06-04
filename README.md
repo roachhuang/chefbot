@@ -142,4 +142,6 @@ the ~ (tilde) at the beginning of the parameter name indicates that this is a pr
 
 to do:
     connect imu's ad0 to ground so it address will be fixed at 0x68
+    udev rules for fixing ttyusbX for a usb device
+    
     
