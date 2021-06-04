@@ -47,6 +47,7 @@
         </link>
 
         <joint name="${prefix}_wheel_joint" type="continuous">
+            <!-- axis defines the rotation axis of the joint wrt the parent frame -->
             <axis xyz="0 1 0" rpy="0 0 0" />
             <parent link="base_link" />
             <child link="${prefix}_wheel_link" />

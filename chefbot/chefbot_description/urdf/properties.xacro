@@ -65,4 +65,6 @@
   <xacro:property name="cameraSize" value="0.05" />
   <xacro:property name="cameraMass" value="0.1" />
 
+  <property name="DEG_TO_RAD" value="0.017453293" />
+
 </robot>
