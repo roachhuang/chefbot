@@ -56,7 +56,8 @@ void TwistToMotors::init_variables()
 	left = 0;
 	right = 0;
 	dx = dy = dr = 0;
-	w = 0.2;
+	// to be read from param in the launch file
+	// w = 0.2;
 	rate = 50;
 	timeout_ticks = 2;
 }

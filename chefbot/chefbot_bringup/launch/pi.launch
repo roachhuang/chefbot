@@ -3,7 +3,7 @@
 
     <!-- these are the arguments you can pass this launch file, for example paused:=true -->
     
-    <param name="base_width" type='double' value='0.186'/>
+    <param name="base_width" type='double' value='0.1985'/>
     <param name="ticks_meter" value='4504'/>
 
     <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->

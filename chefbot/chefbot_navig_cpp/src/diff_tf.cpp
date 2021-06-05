@@ -104,8 +104,9 @@ void Odometry_calc::init_variables()
 
 	rate = 10;
 
-	ticks_meter = 50;
-	base_width = 0.3;
+	// read from param in the launch file
+	// ticks_meter = 50;
+	// base_width = 0.3;
 
 	encoder_low_wrap = ((encoder_max - encoder_min) * 0.3) + encoder_min;
 	encoder_high_wrap = ((encoder_max - encoder_min) * 0.7) + encoder_min;

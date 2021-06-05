@@ -24,7 +24,7 @@
         <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model kbot -param robot_description" />
     </group>
 
-    <param name="base_width" type='double' value='0.186'/>
+    <param name="base_width" type='double' value='0.1985'/>
     <param name="ticks_meter" value='4504'/>
 
     <!--
