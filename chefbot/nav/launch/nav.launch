@@ -20,7 +20,8 @@
   <include file="$(find nav)/launch/move_base.launch">
     <arg name="move_forward_only" value="$(arg move_forward_only)" />
   </include>
-
+  
+  <param name="robot_description" command="$(find xacro)/xacro $(find chefbot_description)/urdf/kbot.xacro"/>  
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
     <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/kbot.xacro'" />
   </node>
