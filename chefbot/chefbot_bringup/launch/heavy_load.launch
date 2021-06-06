@@ -4,7 +4,7 @@
     </node>
 
     <node name="steer" pkg="rqt_robot_steering" type="rqt_robot_steering" />
-    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop" />
+    <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop" output='screen'/>
 
     <arg name="scan_topic" default="/scan" />
     <arg name="odom_topic" default="/odom" />

@@ -54,9 +54,9 @@ class LaunchpadClass(object):
         rospy.loginfo("Starting with serial port: " +
                       port + ", baud rate: " + str(baudRate))
         # Initializing SerialDataGateway with port, baudrate and callback function to handle serial data
-        self._SerialDataGateway = SerialDataGateway(
-            port, baudRate, self._HandleReceivedLine)
+        self._SerialDataGateway = SerialDataGateway(port, baudRate, self._HandleReceivedLine)
         rospy.loginfo("Started serial communication")
+
         # Subscribers and Publishers
         # Publisher for left and right wheel encoder values
         self._Left_Encoder = rospy.Publisher('lwheel', Int64, queue_size=10)
@@ -80,8 +80,7 @@ class LaunchpadClass(object):
         """
 
         # Publisher for entire serial data
-        self._SerialPublisher = rospy.Publisher(
-            'serial', String, queue_size=10)
+        self._SerialPublisher = rospy.Publisher('serial', String, queue_size=50)
 
         # Subscribers and Publishers of IMU data topic
         self.frame_id = '/base_link'
@@ -145,9 +144,8 @@ class LaunchpadClass(object):
     # Calculate orientation from accelerometer and gyrometer
     def _HandleReceivedLine(self, line):
         self._Counter = self._Counter + 1
-        self._SerialPublisher.publish(
-            String(str(self._Counter) + ", in:  " + line))
-
+        self._SerialPublisher.publish(String(str(self._Counter) + ", in: " + line))
+        rospy.loginfo('post pub serial')
         if (len(line) > 0):
             lineParts = line.split('\t')
             try:
