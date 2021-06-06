@@ -145,7 +145,7 @@ class LaunchpadClass(object):
     def _HandleReceivedLine(self, line):
         self._Counter = self._Counter + 1
         self._SerialPublisher.publish(String(str(self._Counter) + ", in: " + line))
-        rospy.loginfo('post pub serial')
+        # rospy.loginfo('post pub serial')
         if (len(line) > 0):
             lineParts = line.split('\t')
             try:
