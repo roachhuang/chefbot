@@ -5,9 +5,9 @@
   <arg name="move_forward_only" default="false"/>
   <arg name='model' default='burger'/>
   
-  <!-- move_base -->
+  <!-- move_base  subscribes the goal from a topic called move_ base_simple/goal -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+    <!-- <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" /> -->
     <rosparam file="$(find nav)/param/costmap_common_params_burger.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find nav)/param/costmap_common_params_burger.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find nav)/param/local_costmap_params.yaml" command="load" />
@@ -16,6 +16,6 @@
     <rosparam file="$(find nav)/param/dwa_local_planner_params_$(arg model).yaml" command="load" />
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>
-    <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" />
+    <!-- <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" /> -->
   </node>
 </launch>

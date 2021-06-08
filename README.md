@@ -143,5 +143,11 @@ the ~ (tilde) at the beginning of the parameter name indicates that this is a pr
 to do:
     connect imu's ad0 to ground so it address will be fixed at 0x68
     udev rules for fixing ttyusbX for a usb device
+        rosrun turtlebot3_bringup create_udev_rules
+        sudo udevadm control --reload
+        sudo udevadm trigger
+    refer to turtlebot setup to enable boot before wifi available
+    study vel limitation of h/w interefece 
+    
     
     

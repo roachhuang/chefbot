@@ -55,7 +55,7 @@ class LaunchpadClass(object):
                       port + ", baud rate: " + str(baudRate))
         # Initializing SerialDataGateway with port, baudrate and callback function to handle serial data
         self._SerialDataGateway = SerialDataGateway(port, baudRate, self._HandleReceivedLine)
-        rospy.loginfo("Started serial communication")
+        # rospy.loginfo("Started serial communication")
 
         # Subscribers and Publishers
         # Publisher for left and right wheel encoder values
@@ -130,15 +130,13 @@ class LaunchpadClass(object):
         self._left_wheel_speed_ = left_speed.data
         rospy.loginfo(left_speed.data)
         # speed_message = 's %f %f\r' %(int(self._left_wheel_speed_),int(self._right_wheel_speed_))
-        speed_message = 's %f %f\r' % (
-            self._left_wheel_speed_, self._right_wheel_speed_)
+        speed_message = 's %f %f\r' % (self._left_wheel_speed_, self._right_wheel_speed_)
         self._WriteSerial(speed_message)
 
     def _Update_Right_Speed(self, right_speed):
         self._right_wheel_speed_ = right_speed.data
         rospy.loginfo(right_speed.data)
-        speed_message = 's %f %f\r' % (
-            self._left_wheel_speed_, self._right_wheel_speed_)
+        speed_message = 's %f %f\r' % (self._left_wheel_speed_, self._right_wheel_speed_)
         self._WriteSerial(speed_message)
 
     # Calculate orientation from accelerometer and gyrometer
@@ -202,8 +200,7 @@ class LaunchpadClass(object):
                 pass
 
     def _WriteSerial(self, message):
-        self._SerialPublisher.publish(
-            String(str(self._Counter) + ", out: " + message))
+        # self._SerialPublisher.publish(String(str(self._Counter) + ", out: " + message))
         self._SerialDataGateway.Write(message)
 
     def Start(self):

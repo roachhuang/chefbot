@@ -30,7 +30,7 @@ class SerialDataGateway(object):
 		self._KeepRunning = False
 
 	def Start(self):
-		self._Serial = serial.Serial(port = self._Port, baudrate = self._Baudrate, timeout = 1)
+		self._Serial = serial.Serial(self._Port, self._Baudrate)
 		rospy.loginfo("Start serial gateway")
 		self._KeepRunning = True
 		self._ReceiverThread = threading.Thread(target=self._Listen)
@@ -66,7 +66,7 @@ class SerialDataGateway(object):
 		self._Serial.write(data)
 			
 	if __name__ == '__main__':
-		dataReceiver = SerialDataGateway(self._Port, self._Baudrate)
+		dataReceiver = SerialDataGateway(self._Port, self._Baudrate, self._Listen)
 		dataReceiver.Start()
 
 		raw_input("Hit <Enter> to end.")

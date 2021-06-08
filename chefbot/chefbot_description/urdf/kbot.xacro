@@ -12,30 +12,38 @@
        add a simple link without inertia and make a joint between it and the chassis
     -->
 
-  <link name="base_footprint">
-    <xacro:box_inertia m="0" w="0" h="0" d="0" />
+  <link name="base_footprint">   
+    <xacro:box_inertia m="0.001" w="0.001" h="0.001" d="0.001" />
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <box size="0.001 0.001 0.001" />
+      </geometry>
+  </visual>
   </link>
-
-  <joint name="base_footprint_joint" type="fixed">
-    <origin xyz="0 0 ${-(2*wheel_radius+base_height)}" rpy="0 0 0" />
-    <parent link="base_footprint" />
-    <child link="base_link" />
-  </joint>
 
   <link name="base_link">
     <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
         <cylinder radius="${base_radius}" length="${base_height}" />
       </geometry>
       <material name="gold" />
     </visual>
     <collision>
+      <origin xyz="0 0 0" rpy="0 0 0 " />
       <geometry>
         <cylinder radius="${base_radius}" length="${base_height}" />
       </geometry>
     </collision>
     <xacro:cylinder_inertia m="${base_mass}" r="${base_radius}" h="${base_height}" />
   </link>
+
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0 0 ${(2*wheel_radius)}" rpy="0 0 0" />
+    <parent link="base_footprint" />
+    <child link="base_link" />
+  </joint>
 
   <xacro:wheel prefix="left" y_reflect="1" />
   <xacro:wheel prefix="right" y_reflect="-1" />
@@ -55,7 +63,7 @@
     <xacro:cylinder_inertia m="${lidar_mass}" r="${lidar_radius}" h="${lidar_height}" />
   </link>
   <joint name="lidar_joint" type="fixed">   
-    <origin xyz="0 0 ${base_height+lidar_radius/4}" rpy="0 0 0" />
+    <origin xyz="0 0 ${15*base_height+lidar_radius/4}" rpy="0 0 0" />
     <parent link="base_link" />
     <child link="lidar_link" />
   </joint>

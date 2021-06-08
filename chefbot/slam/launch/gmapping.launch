@@ -1,11 +1,13 @@
-<launch>
-  
+<launch>  
   <!-- Arguments -->
   <arg name="set_base_frame" default="base_footprint" />
   <arg name="set_odom_frame" default="odom" />
   <arg name="set_map_frame" default="map" />
 
-  <!-- Gmapping -->
+  <!-- Gmapping:  takes the laser scan data and odometry to build a 2D occupancy grid map
+      sub: laser data and tf data
+      pub: /nav_msgs/OccupancyGrid
+  -->
   <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
     <param name="base_frame" value="$(arg set_base_frame)" />
     <param name="odom_frame" value="$(arg set_odom_frame)" />
