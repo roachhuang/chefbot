@@ -61,8 +61,8 @@ class SerialDataGateway(object):
 					rospy.logerr('stringIo write error!')
 			
 	def Write(self, data):
-		info = "Writing to serial port: %s" %data
-		rospy.loginfo(info)
+		#info = "Writing to serial port: %s" %data
+		#rospy.loginfo(info)
 		self._Serial.write(data)
 			
 	if __name__ == '__main__':

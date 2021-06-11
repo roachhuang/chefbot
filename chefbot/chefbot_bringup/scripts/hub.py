@@ -83,14 +83,14 @@ class LaunchpadClass(object):
         self._SerialPublisher = rospy.Publisher('serial', String, queue_size=50)
 
         # Subscribers and Publishers of IMU data topic
-        self.frame_id = '/base_link'
+        self.frame_id = 'base_link'
 
         self.cal_offset = 0.0
         self.orientation = 0.0
         self.cal_buffer = []
         self.cal_buffer_length = 1000
 
-        self.imu_data = Imu(header=rospy.Header(frame_id="base_link"))
+        self.imu_data = Imu(header=rospy.Header(frame_id=self.frame_id))
         
         self.imu_data.orientation_covariance = [1e6, 0, 0, 0, 1e6, 0, 0, 0, 1e-6]
         self.imu_data.angular_velocity_covariance = [1e6, 0, 0, 0, 1e6, 0, 0, 0, 1e-6]

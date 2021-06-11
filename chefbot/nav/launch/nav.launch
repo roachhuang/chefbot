@@ -1,8 +1,8 @@
 <launch>
   <!-- Arguments -->
-  <arg name="map_file" default="$(find load_map)/map/kbot.yaml" />
   <arg name="open_rviz" default="true" />
   <arg name="move_forward_only" default="false" />
+  <arg name="model" default="$(find chefbot_description)/urdf/kbot.xacro"/>
 
   <!-- 
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
@@ -21,9 +21,9 @@
     <arg name="move_forward_only" value="$(arg move_forward_only)" />
   </include>
   
-  <param name="robot_description" command="$(find xacro)/xacro $(find chefbot_description)/urdf/kbot.xacro"/>  
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
-    <param name="robot_description" command="$(find xacro)/xacro '$(find chefbot_description)/urdf/kbot.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/> 
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">    
   </node>
 
   <!-- rviz -->

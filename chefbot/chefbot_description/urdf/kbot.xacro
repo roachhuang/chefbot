@@ -12,7 +12,8 @@
        add a simple link without inertia and make a joint between it and the chassis
     -->
 
-  <link name="base_footprint">   
+  <link name="base_footprint">  
+    <!-- 
     <xacro:box_inertia m="0.001" w="0.001" h="0.001" d="0.001" />
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
@@ -20,6 +21,7 @@
           <box size="0.001 0.001 0.001" />
       </geometry>
   </visual>
+    -->
   </link>
 
   <link name="base_link">
@@ -68,7 +70,7 @@
     <child link="lidar_link" />
   </joint>
 
-  <link name="imu">
+  <link name="imu_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
@@ -80,7 +82,7 @@
   <joint name="imu_joint" type="fixed">
     <origin rpy="0 0 0" xyz="-0.035 0.03 0.01" />
     <parent link="base_link" />
-    <child link="imu" />
+    <child link="imu_link" />
   </joint>
 
   <!-- 
