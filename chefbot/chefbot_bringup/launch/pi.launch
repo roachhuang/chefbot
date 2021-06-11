@@ -23,5 +23,7 @@
         <remap from="rwheel_vtarget" to="/roachbot/rwheel/command" />
         <remap from="lwheel_vtarget" to="/roachbot/lwheel/command" />
     </node>
-    <node pkg="chefbot_navig_cpp" type="diff_tf" name="diff_tf" output="screen" />
+    
+    <node pkg="chefbot_navig_cpp" type="diff_tf" name="diff_tf" output="screen" >        
+    </node>
 </launch>
