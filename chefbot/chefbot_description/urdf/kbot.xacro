@@ -61,11 +61,10 @@
         <cylinder radius="${lidar_radius}" length="${lidar_height}" />
       </geometry>
       <material name="blue" />
-    </visual>
-    <xacro:cylinder_inertia m="${lidar_mass}" r="${lidar_radius}" h="${lidar_height}" />
+    </visual>   
   </link>
-  <joint name="lidar_joint" type="fixed">   
-    <origin xyz="0 0 ${15*base_height+lidar_radius/4}" rpy="0 0 0" />
+  <joint name="lidar_joint" type="fixed">        
+   <origin xyz="0 0 ${3.1*2*wheel_radius}" rpy="0 0 0" />
     <parent link="base_link" />
     <child link="lidar_link" />
   </joint>

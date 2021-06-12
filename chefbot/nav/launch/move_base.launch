@@ -12,18 +12,18 @@
     <param name="base_global_planner" value="$(arg base_global_planner)"/>
     <param name="base_local_planner" value="$(arg base_local_planner)"/>  
     <!-- <param name="controller_frequency" value="10.0"/> -->
-    <!-- <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" /> -->
-    <rosparam file="$(find nav)/param/common_costmap.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find nav)/param/common_costmap.yaml" command="load" ns="local_costmap" />
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" /> 
+
+    <rosparam file="$(find nav)/param/costmap_common_params_burger.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find nav)/param/costmap_common_params_burger.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find nav)/param/local_costmap.yaml" command="load" />
     <rosparam file="$(find nav)/param/global_costmap.yaml" command="load" />
-    <rosparam file="$(find nav)/param/planner.yaml" command="load" />
-    <!-- 
+    
     <rosparam file="$(find nav)/param/move_base_params.yaml" command="load" />
     <rosparam file="$(find nav)/param/dwa_local_planner_params_$(arg model).yaml" command="load" />
-    -->
+    
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>
-    <!-- <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" /> -->
+    <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" />
   </node>
 </launch>
