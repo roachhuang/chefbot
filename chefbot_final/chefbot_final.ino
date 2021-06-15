@@ -43,7 +43,7 @@ float vel[2];
 // #include <limits.h>
 
 //Creating MPU6050 Object
-MPU6050 accelgyro(0x68);
+MPU6050 mpu(0x68);
 //Messenger object
 Messenger Messenger_Handler = Messenger();
 
@@ -176,11 +176,11 @@ void Setup_MPU6050()
   Wire.begin();
   // initialize device
   Serial.println("Initializing I2C devices...");
-  accelgyro.initialize();
+  mpu.initialize();
 
   // verify connection
   Serial.println("Testing device connections...");
-  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+  Serial.println(mpu.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
 
   //Initialize DMP in MPU 6050
   Setup_MPU6050_DMP();
@@ -189,23 +189,27 @@ void Setup_MPU6050()
 void Setup_MPU6050_DMP()
 {
   //DMP Initialization
-  devStatus = accelgyro.dmpInitialize();
-  // get this calibration params from file->example->mpu6050->Imu_Zero
-  accelgyro.setXGyroOffset(-3954);
-  accelgyro.setYGyroOffset(269);
-  accelgyro.setZGyroOffset(599);
-  accelgyro.setZAccelOffset(-9);  
+  devStatus = mpu.dmpInitialize();
+
+  /* get this calibration params from file->example->mpu6050->Imu_Zero */
+  mpu.setXAccelOffset(-3761);
+  mpu.setYAccelOffset(339);
+  mpu.setZAccelOffset(615);
+  
+  mpu.setXGyroOffset(139);
+  mpu.setYGyroOffset(88);
+  mpu.setZGyroOffset(-12);
 
   if (devStatus == 0) {
-    accelgyro.setDMPEnabled(true);
+    mpu.setDMPEnabled(true);
 
     pinMode(18, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(18), dmpDataReady, RISING);
     // attachInterrupt(PUSH2, dmpDataReady, RISING);
-    mpuIntStatus = accelgyro.getIntStatus();
+    mpuIntStatus = mpu.getIntStatus();
 
     dmpReady = true;
-    packetSize = accelgyro.dmpGetFIFOPacketSize();
+    packetSize = mpu.dmpGetFIFOPacketSize();
   } else {
     ;
   }
@@ -241,12 +245,12 @@ void loop()
   // Update_Time();
   // Update_Ultra_Sonic();
   //Update_Battery();
-  
-  if (bPubEncoder){     
+
+  if (bPubEncoder) {
     Update_Encoders();
     bPubEncoder = false;
   }
-  
+
   //Update motor values with corresponding speed and send speed values through serial port
   Update_Motors();
 
@@ -255,7 +259,7 @@ void loop()
 
 void Read_From_Serial()
 {
-  while (Serial.available() > 0)  
+  while (Serial.available() > 0)
   {
     Messenger_Handler.process(Serial.read());
   }
@@ -275,7 +279,7 @@ void OnMssageCompleted()
   if (Messenger_Handler.checkString(set_speed))
   {
     //This will set the speed
-    Set_Speed();   
+    Set_Speed();
   }
 }
 
@@ -293,7 +297,7 @@ void isrTimerOne() {
 
 void do_Left_Encoder()
 {
-   bPubEncoder = true;
+  bPubEncoder = true;
   // Test transition; since the interrupt will only fire on 'rising' we don't need to read pin A
   LeftEncoderBSet = digitalRead(Left_Encoder_PinB);   // read the input pin
   if (LeftEncoderBSet) {
@@ -334,24 +338,24 @@ void Update_Motors()
   moveRightMotor(motor_right_speed);
   moveLeftMotor(motor_left_speed);
   /* launchpad doesn't take care of 's'
-  Serial.print("s");
-  Serial.print("\t");
-  Serial.print(motor_left_speed);
-  Serial.print("\t");
-  Serial.print(motor_right_speed);
-  Serial.print("\n");
-  Serial.flush();
+    Serial.print("s");
+    Serial.print("\t");
+    Serial.print(motor_left_speed);
+    Serial.print("\t");
+    Serial.print(motor_right_speed);
+    Serial.print("\n");
+    Serial.flush();
   */
 }
 
 void Update_Encoders()
-{  
+{
   Serial.print("e");
   Serial.print("\t");
   Serial.print(Left_Encoder_Ticks);
   Serial.print("\t");
   Serial.print(Right_Encoder_Ticks);
-  Serial.print("\n"); 
+  Serial.print("\n");
   //Serial.flush();
 }
 
@@ -395,20 +399,20 @@ void Update_MPU6050_DMP()
   }
 
   mpuInterrupt = false;
-  mpuIntStatus = accelgyro.getIntStatus();
+  mpuIntStatus = mpu.getIntStatus();
   //get current FIFO count
-  fifoCount = accelgyro.getFIFOCount();
+  fifoCount = mpu.getFIFOCount();
 
   if ((mpuIntStatus & 0x10) || fifoCount > 512) {
     // reset so we can continue cleanly
-    accelgyro.resetFIFO();
+    mpu.resetFIFO();
   }
   else if (mpuIntStatus & 0x02) {
     // wait for correct available data length, should be a VERY short wait
-    while (fifoCount < packetSize) fifoCount = accelgyro.getFIFOCount();
+    while (fifoCount < packetSize) fifoCount = mpu.getFIFOCount();
 
     // read a packet from FIFO
-    accelgyro.getFIFOBytes(fifoBuffer, packetSize);
+    mpu.getFIFOBytes(fifoBuffer, packetSize);
 
     // track FIFO count here in case there is > 1 packet available
     // (this lets us immediately read more without waiting for an interrupt)
@@ -416,7 +420,7 @@ void Update_MPU6050_DMP()
 
 #ifdef OUTPUT_READABLE_QUATERNION
     // display quaternion values in easy matrix form: w x y z
-    accelgyro.dmpGetQuaternion(&q, fifoBuffer);
+    mpu.dmpGetQuaternion(&q, fifoBuffer);
 
     Serial.print("i"); Serial.print("\t");
     Serial.print(q.x); Serial.print("\t");
@@ -429,8 +433,8 @@ void Update_MPU6050_DMP()
 
 #ifdef OUTPUT_READABLE_EULER
     // display Euler angles in degrees
-    accelgyro.dmpGetQuaternion(&q, fifoBuffer);
-    accelgyro.dmpGetEuler(euler, &q);
+    mpu.dmpGetQuaternion(&q, fifoBuffer);
+    mpu.dmpGetEuler(euler, &q);
     Serial.print("euler\t");
     Serial.print(euler[0] * 180 / M_PI);
     Serial.print("\t");
@@ -441,59 +445,15 @@ void Update_MPU6050_DMP()
 
 #ifdef OUTPUT_READABLE_YAWPITCHROLL
     // display Euler angles in degrees
-    accelgyro.dmpGetQuaternion(&q, fifoBuffer);
-    accelgyro.dmpGetGravity(&gravity, &q);
-    accelgyro.dmpGetYawPitchRoll(ypr, &q, &gravity);
+    mpu.dmpGetQuaternion(&q, fifoBuffer);
+    mpu.dmpGetGravity(&gravity, &q);
+    mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
     Serial.print("ypr\t");
     Serial.print(ypr[0] * 180 / M_PI);
     Serial.print("\t");
     Serial.print(ypr[1] * 180 / M_PI);
     Serial.print("\t");
     Serial.println(ypr[2] * 180 / M_PI);
-#endif
-
-#ifdef OUTPUT_READABLE_REALACCEL
-    // display real acceleration, adjusted to remove gravity
-    accelgyro.dmpGetQuaternion(&q, fifoBuffer);
-    accelgyro.dmpGetAccel(&aa, fifoBuffer);
-    accelgyro.dmpGetGravity(&gravity, &q);
-    accelgyro.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-    Serial.print("areal\t");
-    Serial.print(aaReal.x);
-    Serial.print("\t");
-    Serial.print(aaReal.y);
-    Serial.print("\t");
-    Serial.println(aaReal.z);
-#endif
-
-#ifdef OUTPUT_READABLE_WORLDACCEL
-    // display initial world-frame acceleration, adjusted to remove gravity
-    // and rotated based on known orientation from quaternion
-    accelgyro.dmpGetQuaternion(&q, fifoBuffer);
-    accelgyro.dmpGetAccel(&aa, fifoBuffer);
-    accelgyro.dmpGetGravity(&gravity, &q);
-    accelgyro.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-    accelgyro.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-    Serial.print("aworld\t");
-    Serial.print(aaWorld.x);
-    Serial.print("\t");
-    Serial.print(aaWorld.y);
-    Serial.print("\t");
-    Serial.println(aaWorld.z);
-#endif
-
-#ifdef OUTPUT_TEAPOT
-    // display quaternion values in InvenSense Teapot demo format:
-    teapotPacket[2] = fifoBuffer[0];
-    teapotPacket[3] = fifoBuffer[1];
-    teapotPacket[4] = fifoBuffer[4];
-    teapotPacket[5] = fifoBuffer[5];
-    teapotPacket[6] = fifoBuffer[8];
-    teapotPacket[7] = fifoBuffer[9];
-    teapotPacket[8] = fifoBuffer[12];
-    teapotPacket[9] = fifoBuffer[13];
-    Serial.write(teapotPacket, 14);
-    teapotPacket[11]++; // packetCount, loops at 0xFF on purpose
 #endif
   }
 }
@@ -535,7 +495,6 @@ void Update_Battery()
   Serial.print("\t");
   Serial.print(battery_level);
   Serial.print("\n");
-
 }
 
 void moveLeftMotor(float out)

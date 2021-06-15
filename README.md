@@ -143,11 +143,19 @@ the ~ (tilde) at the beginning of the parameter name indicates that this is a pr
 to do:
     connect imu's ad0 to ground so it address will be fixed at 0x68
     udev rules for fixing ttyusbX for a usb device
+        0. Udev stores all the rules in the /etc/udev/rules.d/ 
+        1. connect a device to a usb port, dmesg|grep 
+        2. udevadm info -a -p  $(udevadm info -q path -n /dev/ttyUSB0) |grep serial
+        3. look for serial and product
+        4. ACTION=="add", ATTRS{product}=="<product>", ATTRS{serial}=="<serial>", SYMLINK+="arduion"
+        5. uplug your devce and re-plug it in, and check the /dev/arduino
+        =====================================================================
         rosrun turtlebot3_bringup create_udev_rules
         sudo udevadm control --reload
         sudo udevadm trigger
     refer to turtlebot setup to enable boot before wifi available
     study vel limitation of h/w interefece 
-    
+    tf2:
+        sudo apt-get install ros-noetic-tf2-tools
     
     

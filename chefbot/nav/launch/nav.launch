@@ -31,4 +31,6 @@
     <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find nav)/rviz/turtlebot3_navigation.rviz" />
   </group>
 
+  <include file="$(find chefbot_bringup)/launch/ekf.launch" />
+
 </launch>

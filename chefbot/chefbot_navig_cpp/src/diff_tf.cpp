@@ -1,9 +1,11 @@
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Int64.h>
-#include <tf/transform_broadcaster.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2_ros/transform_broadcaster.h>
+#include <geometry_msgs/TransformStamped.h>
 #include <nav_msgs/Odometry.h>
-#include <math.h>
+// #include <math.h>
 
 class Odometry_calc
 {
@@ -18,7 +20,7 @@ private:
 	ros::Subscriber r_wheel_sub;
 	ros::Publisher odom_pub;
 
-	tf::TransformBroadcaster odom_broadcaster;
+	tf2_ros::TransformBroadcaster odom_broadcaster;
 	//Encoder related variables
 	double encoder_min;
 	double encoder_max;
@@ -237,17 +239,19 @@ void Odometry_calc::update()
 		if (th != 0)
 			theta_final = theta_final + th;
 
-		geometry_msgs::Quaternion odom_quat;
-
+		// geometry_msgs::Quaternion odom_quat;
+		tf2::Quaternion odom_quat;
+/*
 		odom_quat.x = 0.0;
 		odom_quat.y = 0.0;
 		odom_quat.z = 0.0;
 
 		odom_quat.z = sin(theta_final / 2);
 		odom_quat.w = cos(theta_final / 2);
-
+*/
 		//first, we'll publish the transform over tf
 		geometry_msgs::TransformStamped odom_trans;
+
 		odom_trans.header.stamp = now;
 		odom_trans.header.frame_id = "odom";
 		odom_trans.child_frame_id = "base_footprint";
@@ -255,7 +259,13 @@ void Odometry_calc::update()
 		odom_trans.transform.translation.x = x_final;
 		odom_trans.transform.translation.y = y_final;
 		odom_trans.transform.translation.z = 0.0;
-		odom_trans.transform.rotation = odom_quat;
+
+		odom_quat.setRPY(0, 0, theta_final);
+		// odom_quat.normalize();
+		odom_trans.transform.rotation.x = odom_quat.x();
+		odom_trans.transform.rotation.y = odom_quat.y();
+		odom_trans.transform.rotation.z = odom_quat.z();
+		odom_trans.transform.rotation.w = odom_quat.w();
 
 		//send the transform
 		odom_broadcaster.sendTransform(odom_trans);
@@ -269,7 +279,10 @@ void Odometry_calc::update()
 		odom.pose.pose.position.x = x_final;
 		odom.pose.pose.position.y = y_final;
 		odom.pose.pose.position.z = 0.0;
-		odom.pose.pose.orientation = odom_quat;
+		odom.pose.pose.orientation.x = odom_quat.x();
+		odom.pose.pose.orientation.y = odom_quat.y();
+		odom.pose.pose.orientation.z = odom_quat.z();
+		odom.pose.pose.orientation.w = odom_quat.w();
 
 		//set the velocity
 		odom.child_frame_id = "base_footprint";
