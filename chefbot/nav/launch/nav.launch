@@ -3,7 +3,7 @@
   <arg name="open_rviz" default="true" />
   <arg name="move_forward_only" default="false" />
   <arg name="model" default="$(find chefbot_description)/urdf/kbot.xacro"/>
-  <arg name="base" default="move_base" />
+  <arg name="base_file" default="move_base.launch" />
 
   <!-- 
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
@@ -18,7 +18,7 @@
   <include file="$(find nav)/launch/amcl.launch" />
 
   <!-- move_base -->
-  <include file="$(find nav)/launch/${arg base}.launch">
+  <include file="$(find nav)/launch/move_base.launch">
     <arg name="move_forward_only" value="$(arg move_forward_only)" />
   </include>
   
