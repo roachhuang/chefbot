@@ -261,7 +261,7 @@ void Odometry_calc::update()
 		odom_trans.transform.translation.z = 0.0;
 
 		odom_quat.setRPY(0, 0, theta_final);
-		// odom_quat.normalize();
+		odom_quat.normalize();
 		odom_trans.transform.rotation.x = odom_quat.x();
 		odom_trans.transform.rotation.y = odom_quat.y();
 		odom_trans.transform.rotation.z = odom_quat.z();

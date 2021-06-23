@@ -3,8 +3,10 @@ local_costmap:
   robot_base_frame: base_footprint
   update_frequency: 5.0
   publish_frequency: 2.0
+  # The transform_tolerance parameter configures the maximum latency for the transforms
   transform_tolerance: 0.5  
-  static_map: false  
+  static_map: false 
+  # rolling win param is used to keep the costmap centered on the robot when it is moving around the world. 
   rolling_window: true
   width: 3.0
   height: 3.0

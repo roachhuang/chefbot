@@ -4,16 +4,6 @@
 ![book_cover](http://learn-robotics.com/images/section-image-1.jpg
  "Learning Robotics using Python")
 
-### Buy book
-
-* [PACKT](https://www.packtpub.com/application-development/learning-robotics-using-python)
-* [Amazon.com](http://amzn.com/1783287535)
-* [Amazon.in](http://www.amazon.in/dp/B00YEVZ6UK)
-
-### Author
-
-* [Lentin Joseph](https://in.linkedin.com/in/lentinjoseph)
-
 ### Installation
 The code is comaptible with ROS Jade and ROS Indigo. The detail installation instruction of each packages is mentioned on the book
 
@@ -38,17 +28,6 @@ The code is comaptible with ROS Jade and ROS Indigo. The detail installation ins
 ![book_cover](http://rosrobots.com/img/ebook.png
  "ROS Robotics Projects")
 
-### Buy book
-
-* [PACKT](https://www.packtpub.com/hardware-and-creative/ros-robotics-projects)
-* [Amazon.com](https://www.amazon.com/ROS-Robotic-Projects-Lentin-Joseph/dp/1783554711)
-* [Amazon.in](https://www.amazon.in/ROS-Robotics-Projects-Lentin-Joseph-ebook/dp/B01MTJWNKI)
-
-
-### Author
-
-* [Lentin Joseph](https://in.linkedin.com/in/lentinjoseph)
-
 ### Installation
 The code is comaptible with ROS melodic and ROS Indigo. The detail installation instruction of each packages is mentioned on the book
 
@@ -66,24 +45,11 @@ The code is comaptible with ROS melodic and ROS Indigo. The detail installation 
 * **Chapter 11**: Teleoperating Robot Using VR Headset and Leap Motion
 * **Chapter 12**: Controlling Your Robots over the Web
 
-
-
 # Mastering ROS for Robotics Programming 
 
 #### [Mastering ROS for Robotics Programming](http://mastering-ros.com) book tutorials source code
 ![book_cover](http://mastering-ros.com/images/section-image-1.jpg
  "Mastering ROS for Robotics Programming")
-
-### Buy book
-
-* [PACKT](https://www.packtpub.com/hardware-and-creative/mastering-ros-robotics-programming)
-* [Amazon.com](http://amzn.com/B0198DXFEW)
-* [Amazon.in](http://www.amazon.in/dp/B0198DXFEW)
-
-
-### Author
-
-* [Lentin Joseph](https://in.linkedin.com/in/lentinjoseph)
 
 ### Installation
 The code is comaptible with ROS Jade and ROS Indigo. The detail installation instruction of each packages is mentioned on the book
@@ -139,8 +105,15 @@ the ~ (tilde) at the beginning of the parameter name indicates that this is a pr
 11. launch lidar from pi4
 12. launch nav from pc
 
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+
 
 to do:
+    pub battery info
+    Use 2 ’s complement arithmetic to subtract previous from current readings to obtain position increment.
+    dynamic mpu claibration
+    check out joint limit
+    calibrate motor ticks and camera
     connect imu's ad0 to ground so it address will be fixed at 0x68
     udev rules for fixing ttyusbX for a usb device
         0. Udev stores all the rules in the /etc/udev/rules.d/ 
@@ -157,5 +130,6 @@ to do:
     study vel limitation of h/w interefece 
     tf2:
         sudo apt-get install ros-noetic-tf2-tools
+    do i need to broadcast imu?
     
     

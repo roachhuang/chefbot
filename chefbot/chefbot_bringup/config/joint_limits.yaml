@@ -9,8 +9,8 @@ joint_limits:
     has_jerk_limits: true
     max_jerk: 0.02 # m/s^3
     has_effort_limits: true
-    max_effort: 255
-    min_effort: -255
+    max_effort: 200
+    min_effort: -200
 
   left_wheel_joint:   
     has_velocity_limits: true
@@ -22,5 +22,5 @@ joint_limits:
     has_jerk_limits: true
     max_jerk: 0.02
     has_effort_limits: true
-    max_effort: 255
-    min_effort: -255
+    max_effort: 200
+    min_effort: -200

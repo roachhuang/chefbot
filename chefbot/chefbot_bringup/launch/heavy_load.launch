@@ -4,7 +4,9 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
 
     <node name="steer" pkg="rqt_robot_steering" type="rqt_robot_steering" />   
+    <!--
     <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop" output='screen'/>
+    -->
 
     <arg name="scan_topic" default="/scan" />
     <arg name="odom_topic" default="/odom" />
