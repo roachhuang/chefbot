@@ -45,5 +45,3 @@ DWAPlannerROS:
 # Debugging
   publish_traj_pc : true
   publish_cost_grid_pc: true
-
-  holonomic_robot: false

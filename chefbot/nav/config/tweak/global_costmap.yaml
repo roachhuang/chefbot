@@ -1,0 +1,11 @@
+# don't change it. good enough!
+
+global_frame: map
+static_map: true
+rolling_window: false
+track_unknown_space: true
+
+plugins:
+  - {name: static,  type: "costmap_2d::StaticLayer"}
+  - {name: inflation, type: "costmap_2d::InflationLayer"}
+  - {name: obstacle,   type: "costmap_2d::VoxelLayer"}

@@ -4,10 +4,10 @@
     <!-- these are the arguments you can pass this launch file, for example paused:=true -->
     
     <param name="base_width" type='double' value='0.198'/>
+    <param name="ticks_meter" value='4636'/> 
     <!-- physical calibration -->
-    <param name="ticks_meter" value='4850'/>
-    
     <!--
+    <param name="ticks_meter" value='4850'/>        
     <param name="ticks_meter" value='4504'/>
     -->
 

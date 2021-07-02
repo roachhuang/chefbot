@@ -131,5 +131,11 @@ to do:
     tf2:
         sudo apt-get install ros-noetic-tf2-tools
     do i need to broadcast imu?
+
+    debgging:
+        why robot won't move?
+            1. check /etc/ttyUSB0 & 1
+            2. echo imu/data to see if it is published
+            3. measure the voltage of batteries output 
     
     

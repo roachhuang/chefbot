@@ -23,7 +23,7 @@ from std_msgs.msg import Int64, Float32, String, Header
 
 # Class to handle serial data from Launchpad and converted to ROS topics
 
-class LaunchpadClass(object):
+class LaunchpadClass:
     def __init__(self):
         # Sensor variables
         self._Counter = 0
@@ -35,17 +35,17 @@ class LaunchpadClass(object):
         self._battery_value = 0
         self._ultrasonic_value = 0
 
-        self._qx = 0
-        self._qy = 0
-        self._qz = 0
-        self._qw = 0
+        #self._qx = 0
+        #self._qy = 0
+        #self._qz = 0
+        #self._qw = 0
 
         self._left_wheel_speed_ = 0
         self._right_wheel_speed_ = 0
 
         self._LastUpdate_Microsec = 0
         self._Second_Since_Last_Update = 0
-        self.robot_heading = 0
+        #self.robot_heading = 0
 
         # Get serial port and baud rate of Tiva C Launchpad
         port = rospy.get_param("~port", "/dev/ttyUSB0")
@@ -80,15 +80,15 @@ class LaunchpadClass(object):
         """
 
         # Publisher for entire serial data
-        self._SerialPublisher = rospy.Publisher('serial', String, queue_size=50)
+        # self._SerialPublisher = rospy.Publisher('serial', String, queue_size=50)
 
         # Subscribers and Publishers of IMU data topic
         self.frame_id = 'base_link'
 
-        self.cal_offset = 0.0
-        self.orientation = 0.0
-        self.cal_buffer = []
-        self.cal_buffer_length = 1000
+        #self.cal_offset = 0.0
+        #self.orientation = 0.0
+        #self.cal_buffer = []
+        #self.cal_buffer_length = 1000
 
         self.imu_data = Imu(header=rospy.Header(frame_id=self.frame_id))
         
@@ -141,8 +141,8 @@ class LaunchpadClass(object):
 
     # Calculate orientation from accelerometer and gyrometer
     def _HandleReceivedLine(self, line):
-        self._Counter = self._Counter + 1
-        self._SerialPublisher.publish(String(str(self._Counter) + ", in: " + line))
+        # self._Counter = self._Counter + 1
+        # self._SerialPublisher.publish(String(str(self._Counter) + ", in: " + line))
         # rospy.loginfo('post pub serial')
         if (len(line) > 0):
             lineParts = line.split('\t')
@@ -166,11 +166,7 @@ class LaunchpadClass(object):
                     self._ultrasonic_value = float(lineParts[1])
                     self._Ultrasonic_Value.publish(self._ultrasonic_value)
                 if (lineParts[0] == 'i'):
-                    # quaternion
-                    self._qx = float(lineParts[1])
-                    self._qy = float(lineParts[2])
-                    self._qz = float(lineParts[3])
-                    self._qw = float(lineParts[4])
+                    # quaternion                    
                     """
                     self._qx_.publish(self._qx)
                     self._qy_.publish(self._qy)
@@ -187,10 +183,10 @@ class LaunchpadClass(object):
                     #imu_msg.angular_velocity_covariance[0]=-1
                     #imu_msg.linear_acceleration_covariance[0] = -1
                     # This represents an orientation in free space in quaternion form.
-                    self.imu_data.orientation.x = self._qx
-                    self.imu_data.orientation.y = self._qy
-                    self.imu_data.orientation.z = self._qz
-                    self.imu_data.orientation.w = self._qw
+                    self.imu_data.orientation.x = float(lineParts[1])
+                    self.imu_data.orientation.y = float(lineParts[2])
+                    self.imu_data.orientation.z = float(lineParts[3])
+                    self.imu_data.orientation.w = float(lineParts[4])
                     # imu_msg.linear_acceleration = Vector3(accelX*G, 0, 0)
                     # imu_msg.angular_velocity = Vector3(gyro[0]*DEG_2_RAD, )
                     self.imu_pub.publish(self.imu_data)
@@ -200,8 +196,11 @@ class LaunchpadClass(object):
                 pass
 
     def _WriteSerial(self, message):
-        self._SerialPublisher.publish(String(str(self._Counter) + ", out: " + message))
-        self._SerialDataGateway.Write(message)
+        try:
+            # self._SerialPublisher.publish(String(str(self._Counter) + ", out: " + message))
+            self._SerialDataGateway.Write(message)
+        except:
+            rospy.logerr('writeSerial err!')    
 
     def Start(self):
         rospy.logdebug("Starting")
@@ -211,8 +210,8 @@ class LaunchpadClass(object):
         rospy.logdebug("Stopping")
         self._SerialDataGateway.Stop()
 
-    def Subscribe_Speed(self):
-        a = 1
+    # def Subscribe_Speed(self):
+    #    a = 1
 
     def Reset_Launchpad(self):
         # print "Reset"
@@ -222,8 +221,8 @@ class LaunchpadClass(object):
         self._WriteSerial(reset)
         time.sleep(2)
 
-    def Send_Speed(self):
-        a = 3
+    # def Send_Speed(self):
+    #    a = 3
 
 if __name__ == '__main__':
     rospy.init_node('hub', anonymous=True)

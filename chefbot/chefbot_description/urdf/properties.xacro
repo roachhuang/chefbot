@@ -63,8 +63,6 @@
   <xacro:property name="caster_mass" value="0.2" />
 
   <xacro:property name="cameraSize" value="0.05" />
-  <xacro:property name="cameraMass" value="0.1" />
-
-  <xacro:property name="DEG_TO_RAD" value="0.017453293" />
+  <xacro:property name="cameraMass" value="0.1" />  
 
 </robot>

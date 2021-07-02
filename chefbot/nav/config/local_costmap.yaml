@@ -1,8 +1,10 @@
-global_frame: odom
+global_frame: /odom
 rolling_window: true
-width: 1.5
-height: 1.5
+static_map: false
+# area of local map window
+width: 2
+height: 2
 
 plugins:
-  - {name: obstacles_laser,           type: "costmap_2d::ObstacleLayer"}
-  - {name: inflation_l,                 type: "costmap_2d::InflationLayer"}
+  - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}
+  - {name: inflation_l,    type: "costmap_2d::InflationLayer"}
