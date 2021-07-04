@@ -10,28 +10,30 @@ from cStringIO import StringIO
 import time
 import rospy
 
-#def _OnLineReceived(line):
-#	print(line)
+def _OnLineReceived(line):
+	print(line)
 
-class SerialDataGateway:
+
+class SerialDataGateway(object):
 	'''
 	Helper class for receiving lines from a serial port
 	'''
 
-	def __init__(self, port, baudrate, lineHandler):
-		"""
+	def __init__(self, port="/dev/ttyUSB0", baudrate=115200, lineHandler = _OnLineReceived):
+		'''
 		Initializes the receiver class. 
 		port: The serial port to listen to.
 		receivedLineHandler: The function to call when a line was received.
-		"""
+		'''
 		self._Port = port
 		self._Baudrate = baudrate
 		self.ReceivedLineHandler = lineHandler
 		self._KeepRunning = False
 
 	def Start(self):
-		self._Serial = serial.Serial(self._Port, self._Baudrate, timeout=1)
-		rospy.loginfo("Start serial gateway")
+		self._Serial = serial.Serial(port = self._Port, baudrate = self._Baudrate, timeout = 1)
+		self._Serial.flush()
+
 		self._KeepRunning = True
 		self._ReceiverThread = threading.Thread(target=self._Listen)
 		self._ReceiverThread.setDaemon(True)
@@ -40,33 +42,35 @@ class SerialDataGateway:
 	def Stop(self):
 		rospy.loginfo("Stopping serial gateway")
 		self._KeepRunning = False
-		time.sleep(.1)
+		time.sleep(.5)
 		self._Serial.close()
 
-	def _Listen(self):		
+	def _Listen(self):
 		stringIO = StringIO()
-		
 		while self._KeepRunning:
-			data = self._Serial.read()
+			try:
+				data = self._Serial.read(1)
+			except Exception:
+				print(self._Serial.isOpen())
+				self.Stop()
+				self.Start()
+
 			if data == '\r':
 				pass
-			if data == '\n':				
+			if data == '\n':
 				self.ReceivedLineHandler(stringIO.getvalue())
 				stringIO.close()
 				stringIO = StringIO()
 			else:
-				try:					
-					stringIO.write(data)
-				except:
-					rospy.logerr('stringIo write error!')
-			
+				stringIO.write(data)
+
 	def Write(self, data):
-		#info = "Writing to serial port: %s" %data
-		#rospy.loginfo(info)
+		info = "Writing to serial port: %s" %data
+		rospy.loginfo(info)
 		self._Serial.write(data)
-			
+
 	if __name__ == '__main__':
-		dataReceiver = SerialDataGateway(self._Port, self._Baudrate)
+		dataReceiver = SerialDataGateway("/dev/ttyUSB0",  115200)
 		dataReceiver.Start()
 
 		raw_input("Hit <Enter> to end.")
