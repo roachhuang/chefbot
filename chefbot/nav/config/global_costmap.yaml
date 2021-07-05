@@ -3,6 +3,8 @@
 global_frame: /map
 rolling_window: false
 track_unknown_space: true
+width: 4
+height: 8
 
 plugins:
   - {name: static,  type: "costmap_2d::StaticLayer"}

@@ -24,7 +24,7 @@ from std_msgs.msg import Int64, Float32, String, Header
 # Class to handle serial data from Launchpad and converted to ROS topics
 
 class LaunchpadClass:
-    def __init__(self):
+    def __init__(self, port='/dev/ttyUSB0', baudrate=115200):
         # Sensor variables
         self._Counter = 0
         self._left_encoder_value = 0
@@ -33,12 +33,7 @@ class LaunchpadClass:
         self._rwheel_vel_value = 0
 
         self._battery_value = 0
-        self._ultrasonic_value = 0
-
-        #self._qx = 0
-        #self._qy = 0
-        #self._qz = 0
-        #self._qw = 0
+        self._ultrasonic_value = 0     
 
         self._left_wheel_speed_ = 0
         self._right_wheel_speed_ = 0
@@ -47,12 +42,6 @@ class LaunchpadClass:
         self._Second_Since_Last_Update = 0
         #self.robot_heading = 0
 
-        # Get serial port and baud rate of Tiva C Launchpad
-        port = rospy.get_param("~port", "/dev/ttyUSB0")
-        baudRate = int(rospy.get_param("~baudRate", 115200))
-
-        rospy.loginfo("Starting with serial port: " +
-                      port + ", baud rate: " + str(baudRate))
         # Initializing SerialDataGateway with port, baudrate and callback function to handle serial data
         self._SerialDataGateway = SerialDataGateway(port, baudRate, self._HandleReceivedLine)
         # rospy.loginfo("Started serial communication")
@@ -143,7 +132,7 @@ class LaunchpadClass:
     def _HandleReceivedLine(self, line):
         # self._Counter = self._Counter + 1
         # self._SerialPublisher.publish(String(str(self._Counter) + ", in: " + line))
-        # rospy.loginfo('post pub serial')
+        rospy.loginfo('.')
         if (len(line) > 0):
             lineParts = line.split('\t')
             try:
@@ -195,13 +184,10 @@ class LaunchpadClass:
                 rospy.logwarn(lineParts)
                 pass
 
-    def _WriteSerial(self, message):
-        try:
-            # self._SerialPublisher.publish(String(str(self._Counter) + ", out: " + message))
-            self._SerialDataGateway.Write(message)
-        except:
-            rospy.logerr('writeSerial err!')    
-
+    def _WriteSerial(self, message):        
+        # self._SerialPublisher.publish(String(str(self._Counter) + ", out: " + message))
+        self._SerialDataGateway.Write(message)       
+             
     def Start(self):
         rospy.logdebug("Starting")
         self._SerialDataGateway.Start()
@@ -226,14 +212,19 @@ class LaunchpadClass:
 
 if __name__ == '__main__':
     rospy.init_node('hub', anonymous=True)
-    launchpad = LaunchpadClass()
+
+    # Get serial port and baud rate of Tiva C Launchpad
+    port = rospy.get_param("~port", "/dev/ttyUSB0")
+    baudRate = int(rospy.get_param("~baudRate", 115200))
+    rospy.loginfo("Starting with serial port: " +
+                      port + ", baud rate: " + str(baudRate))
+    launchpad = LaunchpadClass(port, baudRate)
     try:
         launchpad.Start()
         rospy.spin()
     except rospy.ROSInterruptException:
         rospy.logwarn("Error in main function")
-
-    launchpad.Reset_Launchpad()
-    launchpad.Stop()
+        launchpad.Reset_Launchpad()
+        launchpad.Stop()
 
 

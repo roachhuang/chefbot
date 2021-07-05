@@ -109,6 +109,8 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 
 
 to do:
+    sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+    
     pub battery info
     Use 2 ’s complement arithmetic to subtract previous from current readings to obtain position increment.
     dynamic mpu claibration

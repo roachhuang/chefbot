@@ -14,7 +14,7 @@ def _OnLineReceived(line):
 	print(line)
 
 
-class SerialDataGateway(object):
+class SerialDataGateway:
 	'''
 	Helper class for receiving lines from a serial port
 	'''
@@ -32,7 +32,7 @@ class SerialDataGateway(object):
 
 	def Start(self):
 		self._Serial = serial.Serial(port = self._Port, baudrate = self._Baudrate, timeout = 1)
-		self._Serial.flush()
+		self._Serial.flushInput()
 
 		self._KeepRunning = True
 		self._ReceiverThread = threading.Thread(target=self._Listen)
@@ -50,10 +50,9 @@ class SerialDataGateway(object):
 		while self._KeepRunning:
 			try:
 				data = self._Serial.read(1)
-			except Exception:
+			except serial.SerialException as e:
 				print(self._Serial.isOpen())
-				self.Stop()
-				self.Start()
+				raise e				
 
 			if data == '\r':
 				pass
@@ -67,7 +66,11 @@ class SerialDataGateway(object):
 	def Write(self, data):
 		info = "Writing to serial port: %s" %data
 		rospy.loginfo(info)
-		self._Serial.write(data)
+		try:
+			self._Serial.write(data)
+		except serial.SerialException as e:
+			print(self._Serial.isOpen())
+			raise e				
 
 	if __name__ == '__main__':
 		dataReceiver = SerialDataGateway("/dev/ttyUSB0",  115200)

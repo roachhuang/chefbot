@@ -7,7 +7,7 @@
         "/home/roach/catkin_ws/devel/lib/python2.7/dist-packages",
         "/opt/ros/melodic/lib/python2.7/dist-packages"
     ],
-    "python.formatting.provider": "autopep8",
+    "python.formatting.provider": "yapf",
     "C_Cpp.enhancedColorization": "False",
     "C_Cpp.formatting": "Default",
     "python.linting.pylintEnabled": true,
