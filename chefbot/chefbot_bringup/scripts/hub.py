@@ -47,23 +47,24 @@ class LaunchpadClass:
         # self._SerialDataGateway = SerialDataGateway(port, baudRate, self._HandleReceivedLine)
         # rospy.loginfo("Started serial communication")
         self.ser = serial.Serial(port, baudrate, timeout=2) 
-        self.ser.flushInput()
+        serlf.ser.open()
+        self.ser.flush()
         # wait for the arduino to reset
         sleep(2)   
 
         # Subscribers and Publishers
         # Publisher for left and right wheel encoder values
-        self._Left_Encoder = rospy.Publisher('lwheel', Int64, queue_size=1)
-        self._Right_Encoder = rospy.Publisher('rwheel', Int64, queue_size=1)
-        self.pub_lvel = rospy.Publisher('lwheel_vel', Float32, queue_size=1)
-        self.pub_rvel = rospy.Publisher('rwheel_vel', Float32, queue_size=1)
+        self._Left_Encoder = rospy.Publisher('lwheel', Int64, queue_size=10)
+        self._Right_Encoder = rospy.Publisher('rwheel', Int64, queue_size=10)
+        self.pub_lvel = rospy.Publisher('lwheel_vel', Float32, queue_size=10)
+        self.pub_rvel = rospy.Publisher('rwheel_vel', Float32, queue_size=10)
 
         # Publisher for Battery level(for upgrade purpose)
         self._Battery_Level = rospy.Publisher(
-            'battery_level', Float32, queue_size=1)
+            'battery_level', Float32, queue_size=10)
         # Publisher for Ultrasonic distance sensor
         self._Ultrasonic_Value = rospy.Publisher(
-            'ultrasonic_distance', Float32, queue_size=1)
+            'ultrasonic_distance', Float32, queue_size=10)
 
         # Publisher for IMU rotation quaternion values
         """
@@ -137,7 +138,7 @@ class LaunchpadClass:
     def _HandleReceivedLine(self, line):
         # self._Counter = self._Counter + 1
         # self._SerialPublisher.publish(String(str(self._Counter) + ", in: " + line))
-        rospy.loginfo('.')
+        
         if (len(line) > 0):
             lineParts = line.split('\t')
             try:
@@ -194,7 +195,7 @@ class LaunchpadClass:
         # self._SerialDataGateway.Write(message)   
         try:
             self.ser.write(message)
-        except serial.SerialException as e:
+        except serial.SerialTimeoutException as e:
             print(self.ser.isOpen())
             raise e			    
              
@@ -203,6 +204,7 @@ class LaunchpadClass:
         while True:
             if self.ser.in_waiting > 0:
                 line = self.ser.readline()
+                rospy.loginfo('.')
                 self._HandleReceivedLine(line)
 
         # self._SerialDataGateway.Start()
