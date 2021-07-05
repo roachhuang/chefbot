@@ -107,10 +107,15 @@ the ~ (tilde) at the beginning of the parameter name indicates that this is a pr
 
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 
+python3 -m pip install pyserial
+sudo adduser your_username dialout
+
 
 to do:
+    pi is operating at 3.3v. ardunio like due and teensy also use 3.3v so no voltage level-shifter is required.
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
     
+
     pub battery info
     Use 2 ’s complement arithmetic to subtract previous from current readings to obtain position increment.
     dynamic mpu claibration

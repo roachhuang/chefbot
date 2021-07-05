@@ -10,12 +10,13 @@ http://www.hessmer.org/blog/
 
 # import math
 # import sys
-import time
+import serial
+from time import sleep
 
 # Python client library for ROS
 import rospy
 # This module helps to receive values from serial port
-from SerialDataGateway import SerialDataGateway
+# from SerialDataGateway import SerialDataGateway
 # Importing ROS data type for IMU
 from sensor_msgs.msg import Imu
 # Importing ROS data types
@@ -43,22 +44,26 @@ class LaunchpadClass:
         #self.robot_heading = 0
 
         # Initializing SerialDataGateway with port, baudrate and callback function to handle serial data
-        self._SerialDataGateway = SerialDataGateway(port, baudRate, self._HandleReceivedLine)
+        # self._SerialDataGateway = SerialDataGateway(port, baudRate, self._HandleReceivedLine)
         # rospy.loginfo("Started serial communication")
+        self.ser = serial.Serial(port, baudrate, timeout=2) 
+        self.ser.flushInput()
+        # wait for the arduino to reset
+        sleep(2)   
 
         # Subscribers and Publishers
         # Publisher for left and right wheel encoder values
-        self._Left_Encoder = rospy.Publisher('lwheel', Int64, queue_size=10)
-        self._Right_Encoder = rospy.Publisher('rwheel', Int64, queue_size=10)
-        self.pub_lvel = rospy.Publisher('lwheel_vel', Float32, queue_size=10)
-        self.pub_rvel = rospy.Publisher('rwheel_vel', Float32, queue_size=10)
+        self._Left_Encoder = rospy.Publisher('lwheel', Int64, queue_size=1)
+        self._Right_Encoder = rospy.Publisher('rwheel', Int64, queue_size=1)
+        self.pub_lvel = rospy.Publisher('lwheel_vel', Float32, queue_size=1)
+        self.pub_rvel = rospy.Publisher('rwheel_vel', Float32, queue_size=1)
 
         # Publisher for Battery level(for upgrade purpose)
         self._Battery_Level = rospy.Publisher(
-            'battery_level', Float32, queue_size=10)
+            'battery_level', Float32, queue_size=1)
         # Publisher for Ultrasonic distance sensor
         self._Ultrasonic_Value = rospy.Publisher(
-            'ultrasonic_distance', Float32, queue_size=10)
+            'ultrasonic_distance', Float32, queue_size=1)
 
         # Publisher for IMU rotation quaternion values
         """
@@ -186,15 +191,25 @@ class LaunchpadClass:
 
     def _WriteSerial(self, message):        
         # self._SerialPublisher.publish(String(str(self._Counter) + ", out: " + message))
-        self._SerialDataGateway.Write(message)       
+        # self._SerialDataGateway.Write(message)   
+        try:
+            self.ser.write(message)
+        except serial.SerialException as e:
+            print(self.ser.isOpen())
+            raise e			    
              
     def Start(self):
         rospy.logdebug("Starting")
-        self._SerialDataGateway.Start()
+        while True:
+            if self.ser.in_waiting > 0:
+                line = self.ser.readline()
+                self._HandleReceivedLine(line)
+
+        # self._SerialDataGateway.Start()
 
     def Stop(self):
         rospy.logdebug("Stopping")
-        self._SerialDataGateway.Stop()
+        # self._SerialDataGateway.Stop()
 
     # def Subscribe_Speed(self):
     #    a = 1
@@ -203,9 +218,9 @@ class LaunchpadClass:
         # print "Reset"
         reset = 'r\r'
         self._WriteSerial(reset)
-        time.sleep(1)
+        sleep(1)
         self._WriteSerial(reset)
-        time.sleep(2)
+        sleep(2)
 
     # def Send_Speed(self):
     #    a = 3
@@ -221,6 +236,7 @@ if __name__ == '__main__':
     launchpad = LaunchpadClass(port, baudRate)
     try:
         launchpad.Start()
+        # a spin causes the main program to suspend, but keeps the callback function alive.
         rospy.spin()
     except rospy.ROSInterruptException:
         rospy.logwarn("Error in main function")
