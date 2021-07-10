@@ -1,3 +1,5 @@
+#include <CmdMessenger.h>
+
 /*
   #  Chefbot_ROS_Interface.ino
   #
@@ -13,11 +15,10 @@
   #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   #  GNU General Public License for more details.
   #
-  #
+  #  
   #  9 July 2021 switch to use mpu6050 ver 0.3.0 (a more tidy verison) and i love it.
 */
-// #include <CmdMessenger.h>
-#include <Messenger.h>
+
 #include <Timer.h>
 Timer tm;
 
@@ -38,11 +39,8 @@ float vel[2];
 
 //Creating MPU6050 Object
 MPU6050 mpu(0x68);
-
-// create Messenger object
-Messenger Messenger_Handler = Messenger();
-
-// CmdMessenger cmdMessenger = CmdMessenger(Serial);
+//Messenger object
+CmdMessenger cmdMessenger = CmdMessenger(Serial);
 
 //DMP options
 //Set true if DMP init was successful
@@ -141,11 +139,11 @@ void dmpDataReady() {
 
 void Setup_MPU6050()
 {
-  // join I2C bus (I2Cdev library doesn't do this automatically)
+   // join I2C bus (I2Cdev library doesn't do this automatically)
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
   Wire.begin();
   Wire.setClock(400000); // 400kHz I2C clock. Comment this line if having compilation difficulties
-  Wire.setWireTimeout(3000, true); // note that this line is to fix freezing issue. timeout value in uSec
+  Wire.setWireTimeout(3000, true); //timeout value in uSec
 #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
   Fastwire::setup(400, true);
 #endif
@@ -216,7 +214,7 @@ void Setup_MPU6050()
 
 //Setup serial, encoders, ultrasonic, MPU6050 and Reset functions
 void setup()
-{
+{ 
   //Init Serial port with 115200 baud rate
   Serial.begin(57600);
   while (!Serial);
@@ -226,25 +224,24 @@ void setup()
 
   //Set up Messenger
   // cmdMessenger.attach('s', OnSetSpeed);
-  Messenger_Handler.attach(OnMssageCompleted);
   delay(1000);
 
   SetupEncoders();
   tm.every(200, isrTimerOne);
   SetupMotors();
-  Setup_MPU6050();
+  Setup_MPU6050();  
 }
 
 void loop()
 {
-  tm.update();
-  Read_From_Serial();
+  // tm.update();
+  // Read_From_Serial();
   // Process incoming serial data, and perform callbacks
   // cmdMessenger.feedinSerialData();
 
   // Update_Time();
   // Update_Ultra_Sonic();
-  // Update_Battery();
+  //Update_Battery();
 
   if (bPubEncoder) {
     Update_Encoders();
@@ -253,30 +250,16 @@ void loop()
 
   //Update motor values with corresponding speed and send speed values through serial port
   Update_Motors();
+  Serial.println("after motor");
   Update_MPU6050();
-  // this dealy to reduce the pub rate of imu
-  delay(20);
+  delay(5);
+  Serial.println("after imu");
 }
-/*
+
 void OnSetSpeed() {
   // not that launchpad sends wheel_speed in left first and then right orders.
   motor_left_speed = cmdMessenger.readFloatArg();
   motor_right_speed = cmdMessenger.readFloatArg();
-}
-*/
-void Read_From_Serial()
-{
-  while (Serial.available() > 0)
-  {
-    Messenger_Handler.process(Serial.read());
-  }
-}
-
-void Set_Speed()
-{
-  // not that launchpad sends wheel_speed in left first and then right orders.
-  motor_left_speed = Messenger_Handler.readLong();
-  motor_right_speed = Messenger_Handler.readLong();
 }
 
 //OnMssg Complete function definition
@@ -285,24 +268,14 @@ void OnMssageCompleted()
   const char reset[] = "r";
   const char set_speed[] = "s";
 
-  if (Messenger_Handler.checkString(reset))
+  // if (cmdMessenger.checkString(reset))
   {
     Serial.println("Reset Done");
     resetFunc();
   }
-  if (Messenger_Handler.checkString(set_speed))
-  {
-    //This will set the speed
-    Set_Speed();
-  }
 }
 
 void isrTimerOne() {
-  /* detal D = 2*pi*R*Nticks /Ntotal
-    r = 0.034m, Ntotal=990, this isr triggers 4.46 time per second
-    each tick corresponds to a displacement of 360deg/Ntotal
-    rad = 360/Ntotal * pi/180
-  */
   vel[0] = float(rEnc / 990.0); // temp[0] * 5.0;
   vel[1] = float(lEnc / 990.0); // temp[1] * 5.0;
   rEnc = lEnc = 0;
