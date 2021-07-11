@@ -54,21 +54,20 @@ class LaunchpadClass:
 
         # Subscribers and Publishers
         # Publisher for left and right wheel encoder values
-        self._Left_Encoder = rospy.Publisher('lwheel', Int64, queue_size=10)
-        self._Right_Encoder = rospy.Publisher('rwheel', Int64, queue_size=10)
-        self.pub_lvel = rospy.Publisher('lwheel_vel', Float32, queue_size=10)
-        self.pub_rvel = rospy.Publisher('rwheel_vel', Float32, queue_size=10)     
+        self._Left_Encoder = rospy.Publisher('lwheel', Int64, queue_size=1)
+        self._Right_Encoder = rospy.Publisher('rwheel', Int64, queue_size=1)
+        self.pub_lvel = rospy.Publisher('lwheel_vel', Float32, queue_size=1)
+        self.pub_rvel = rospy.Publisher('rwheel_vel', Float32, queue_size=1)     
 
         # Publisher for entire serial data
-        self._SerialPublisher = rospy.Publisher(
-            'serial', String, queue_size=30)
+        #self._SerialPublisher = rospy.Publisher('serial', String, queue_size=30)
        
         # self.cal_offset = 0.0
         # self.orientation = 0.0
         # self.cal_buffer = []
         # self.cal_buffer_length = 1000
 
-        self.imu_pub = rospy.Publisher('imu/data', Imu, queue_size=10)
+        self.imu_pub = rospy.Publisher('imu/data', Imu, queue_size=1)
 
         """ what for? - figure it out
         self.deltat = 0

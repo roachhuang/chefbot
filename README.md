@@ -112,6 +112,7 @@ sudo adduser your_username dialout
 
 
 to do:
+    substitute messenger with serial.event
     pi is operating at 3.3v. ardunio like due and teensy also use 3.3v so no voltage level-shifter is required.
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
     
