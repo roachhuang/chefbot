@@ -1,4 +1,4 @@
 #port: /dev/ttyACM0
 port: /dev/ttyUSB0
 #port: /dev/arduino
-baudRate: 38400
+baudRate: 115200
