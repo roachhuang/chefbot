@@ -21,6 +21,7 @@ static:
     subscribe_to_updates: true
 
 obstacle_layer:
+    enable: true
     observation_sources: laser
     laser: {sensor_frame: lidar_link, data_type: LaserScan, clearing: true, marking: true, topic: scan, inf_is_valid: true}
 
