@@ -9,9 +9,9 @@ NavfnROS:
 
 DWAPlannerROS:
   # Robot configuration parameters  
-  #acc_lim_x: 10
+  acc_lim_x: 2.5
   acc_lim_y: 0
-  #acc_lim_th: 3.4
+  acc_lim_th: 3.2
 
   max_vel_x: 0.2
   min_vel_x: -0.2
@@ -20,8 +20,8 @@ DWAPlannerROS:
 
   max_vel_trans: 0.2
   min_vel_trans: 0.05
-  max_vel_theta: 0.5
-  min_vel+theta: 0.2
+  max_vel_theta: 0.15
+  min_vel_theta: -0.15
 
   # Goal Tolerance Parameters
   # default is 0.05 giving more precise orientation when reaching goal
@@ -45,7 +45,7 @@ DWAPlannerROS:
   # stop_time_buffer: 0.2  # The amount of time that the robot must stThe absolute value of the veolicty at which to start scaling the robot's footprint, in m/sop before a collision in order for a trajectory to be considered valid in seconds
   scaling_speed: 0.25 # The absolute value of the veolicty at which to start scaling the robot's footprint, in m/s
   max_scaling_factor: 0.2 # The maximum factor to scale the robot's footprint by
-
+  holonomic_robot: false
   # # Oscillation Prevention Parameters
   # oscillation_reset_dist: 0.25 #How far the robot must travel in meters before oscillation flags are reset (double, default: 0.05)
 

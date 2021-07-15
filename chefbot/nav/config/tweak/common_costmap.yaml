@@ -4,7 +4,7 @@ footprint_padding: 0.01
 
 robot_base_frame: base_footprint
 update_frequency: 2.0
-publish_frequency: 1
+publish_frequency: 1.0
 # tolerance of relative coordinate conversion time between tf
 transform_tolerance: 0.5
 
@@ -32,8 +32,8 @@ obstacle_layer:
 inflation:
     # inflation_radius: 0.03
     #inflation_radius: 1.75
-    inflation_radius: 0.4   
-    cost_scaling_factor: 2.5
+    inflation_radius: 0.15   
+    cost_scaling_factor: 3
 
     # exp(-1.0 * cost_scaling_factor *(distance_from_obstacle - inscribed_radius)) *(254 - 1)
     #cost_scaling_factor: 0.5

@@ -1,0 +1,4 @@
+<launch>
+    <node pkg='cv_camera' type='cv_camera_node' name='cv_cmaera' output='screen'/>
+    <node pkg='tf' type='static_transform_publisher' name='camera_frames_pub' args='0.07 0.0 0.1 0 0 0 /base_link /camera 35'/>    
+</launch>
