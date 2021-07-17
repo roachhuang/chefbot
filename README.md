@@ -142,11 +142,14 @@ to do:
     do i need to broadcast imu?
 
     debgging:
+        right wheel threshold 45
         why robot won't move?
             1. check /etc/ttyUSB0 & 1
             2. echo imu/data to see if it is published
             3. measure the voltage of batteries output 
             4. if map keep rotating during nav, check odom (ticks, vel)
             5. motor's encoder led must be on
+
+            rosservice call /move_base/clear_costmaps "{}"
     
     

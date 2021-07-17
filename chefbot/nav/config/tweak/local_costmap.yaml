@@ -1,9 +1,9 @@
 global_frame: odom
 # static_map: false
 rolling_window: true
-width: 2
-height: 2
-resolution: 0.03
+width: 1.5
+height: 1.5
+# resolution: 0.03
 # transform_tolerance: 1.0			 # transform tolerance time
 
 plugins:
