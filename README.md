@@ -151,5 +151,11 @@ to do:
             5. motor's encoder led must be on
 
             rosservice call /move_base/clear_costmaps "{}"
+
+        git stash 
+        git checkout <branch or tag>    
+        git checkout master
+        git stash pop
+        
     
     
