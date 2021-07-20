@@ -152,6 +152,7 @@ to do:
 
             rosservice call /move_base/clear_costmaps "{}"
 
+        git checkout -- *
         git stash 
         git checkout <branch or tag>    
         git checkout master

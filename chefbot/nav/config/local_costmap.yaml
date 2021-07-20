@@ -1,4 +1,4 @@
-global_frame: /odom
+global_frame: odom
 rolling_window: true
 static_map: false
 # area of local map window
