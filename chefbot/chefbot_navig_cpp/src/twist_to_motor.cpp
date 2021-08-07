@@ -47,8 +47,8 @@ TwistToMotors::TwistToMotors()
 	// cmd_vel_sub = n.subscribe("cmd_vel_mux/input/teleop", 10, &TwistToMotors::twistCallback, this);
 	cmd_vel_sub = n.subscribe("cmd_vel", 10, &TwistToMotors::twistCallback, this);
 
-	pub_lmotor = n.advertise<std_msgs::Float64>("lwheel_vtarget", 50);
-	pub_rmotor = n.advertise<std_msgs::Float64>("rwheel_vtarget", 50);
+	pub_lmotor = n.advertise<std_msgs::Float64>("lwheel_vtarget", 10);
+	pub_rmotor = n.advertise<std_msgs::Float64>("rwheel_vtarget", 10);
 }
 
 void TwistToMotors::init_variables()

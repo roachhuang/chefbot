@@ -1,0 +1,31 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/roach/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/roach/catkin_ws/src/ROBOT_hardware_interface/include/**",
+        "/home/roach/catkin_ws/src/image_common/camera_calibration_parsers/include/**",
+        "/home/roach/catkin_ws/src/image_common/camera_info_manager/include/**",
+        "/home/roach/catkin_ws/src/chefbot_ros_pkg/chefbot/chefbot_bringup/include/**",
+        "/home/roach/catkin_ws/src/image_common/image_transport/include/**",
+        "/home/roach/catkin_ws/src/unobot/mobile_robot_base/include/**",
+        "/home/roach/catkin_ws/src/myrobot/include/**",
+        "/home/roach/catkin_ws/src/image_common/polled_camera/include/**",
+        "/home/roach/catkin_ws/src/raspicam_node/include/**",
+        "/home/roach/catkin_ws/src/ros_robotics/include/**",
+        "/home/roach/catkin_ws/src/simple_navigation_goals/include/**",
+        "/home/roach/catkin_ws/src/turtlebot3_simulations/turtlebot3_fake/include/**",
+        "/home/roach/catkin_ws/src/turtlebot3_simulations/turtlebot3_gazebo/include/**",
+        "/home/roach/catkin_ws/src/turtlebot3/turtlebot3_slam/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

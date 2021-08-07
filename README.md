@@ -152,6 +152,12 @@ to do:
 
             rosservice call /move_base/clear_costmaps "{}"
 
+            rostopic pub -l /cmd_vel geometry_msgs/Twist -- '[0.3, 0.0, 0.0]' '[0.0, 0.0, 6.283]'
+
+        xacro <xacro file> > tmp.urdf
+        check_rudf tmp.urdf
+        urdf_to_graphiz tmp.urdf
+
         git checkout -- *
         git stash 
         git checkout <branch or tag>    

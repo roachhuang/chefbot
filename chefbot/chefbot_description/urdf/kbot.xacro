@@ -12,17 +12,21 @@
        add a simple link without inertia and make a joint between it and the chassis
     -->
 
-  <link name="base_footprint">  
-    <!-- 
+  <link name="base_footprint">
     <xacro:box_inertia m="0.001" w="0.001" h="0.001" d="0.001" />
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-          <box size="0.001 0.001 0.001" />
+        <box size="0.001 0.001 0.001" />
       </geometry>
-  </visual>
-    -->
+    </visual>
   </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.04" />
+    <parent link="base_footprint" />
+    <child link="base_link" />
+  </joint>
 
   <link name="base_link">
     <visual>
@@ -61,10 +65,10 @@
         <cylinder radius="${lidar_radius}" length="${lidar_height}" />
       </geometry>
       <material name="blue" />
-    </visual>   
+    </visual>
   </link>
-  <joint name="lidar_joint" type="fixed">        
-   <origin xyz="0 0 ${3.1*2*wheel_radius}" rpy="0 0 0" />
+  <joint name="lidar_joint" type="fixed">
+    <origin xyz="0 0 ${3.1*2*wheel_radius}" rpy="0 0 0" />
     <parent link="base_link" />
     <child link="lidar_link" />
   </joint>
@@ -84,25 +88,31 @@
     <child link="imu_link" />
   </joint>
 
-  <!-- 
-    <link name="camera_link">
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <box size="${cameraSize} ${cameraSize} ${cameraSize}"/>
-        </geometry>
-      </collision>
-    
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <box size="${cameraSize} ${cameraSize} ${cameraSize}"/>
-        </geometry>
-        <material name="blue"/>
-      </visual>    
 
-      <xacro:box_inertia m="${cameraMass}" w="${cameraSize}" h="${cameraSize}" d="${cameraSize}" />
-      
-    </link>
-  -->
+  <link name="camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${cameraSize} ${cameraSize} ${cameraSize}" />
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${cameraSize} ${cameraSize} ${cameraSize}" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <xacro:box_inertia m="${cameraMass}" w="${cameraSize}" h="${cameraSize}" d="${cameraSize}" />
+
+  </link>
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="camera_link" />
+    <origin rpy="0 0 0" xyz="0.09 0.0 0.12" />
+    <axis xyz="1 0 0" />
+  </joint>
+
 </robot>

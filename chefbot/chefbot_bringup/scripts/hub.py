@@ -186,13 +186,14 @@ class LaunchpadClass:
     def Start(self):
         rospy.logdebug("Start receiving...")
         thread = threading.Thread(target=self.ReadFromPort)
-        thread.start()        
+        thread.start()               
 
         # self._SerialDataGateway.Start()
 
     def Stop(self):
-        rospy.logdebug("Stopping")
-        # self._SerialDataGateway.Stop()
+        rospy.logdebug("Stopping")        
+        self.ser.close()
+        #self._SerialDataGateway.Stop()
 
     # def Subscribe_Speed(self):
     #    a = 1

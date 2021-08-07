@@ -2,7 +2,7 @@
 
 import rospy
 from sensor_msgs.msg import LaserScan
-from geometry_msgs import Twist
+from geometry_msgs.msg import Twist
 
 def callback(msg):
     print ('======================================')
@@ -28,18 +28,18 @@ def callback(msg):
     print msg.ranges[359]
 
     # if the distance to an obstacle in front of the robot is bigger than 0.5m, it'll move forward
-    if msg.range[0] > 0.5:
-        move.linear.x = 0.3
+    if msg.ranges[0] > 0.5:
+        move.linear.x = 0.0
         move.angular.z = 0.0
     else:
-        move linear.x = 0.0
-        mov.angular.z = 0.0
+        move.linear.x = 0.3
+        move.angular.z = 6.283
     pub.publish(move)
 
 rospy.init_node('laser_data')
-sub = rospy.Subscriber('scan', LaserScan, callback)
-pub = rospy.Publisher('/cmd_vel', Twist)
 move = Twist()
+sub = rospy.Subscriber('scan', LaserScan, callback)
+pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 rospy.spin()
 
     
