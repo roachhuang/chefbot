@@ -33,14 +33,16 @@
             <visual>
                 <!-- <origin xyz="0 0 0" rpy="${M_PI_2} 0 0" /> -->
                 <geometry>
-                    <cylinder radius="${wheel_radius}" length="${wheel_thick}" />
+                    <!-- <cylinder radius="${wheel_radius}" length="${wheel_thick}" />  -->
+                    <mesh filename="package://urdf_tutorial/meshes/wheel.dae"/>
                 </geometry>
                 <material name="black" />
             </visual>
             <collision>
                 <!-- <origin xyz="0 0 0 " rpy="${M_PI_2} 0 0" /> -->
-                <geometry>
+                <geometry>                    
                     <cylinder radius="${wheel_radius}" length="${wheel_thick}" />
+                    <!-- <mesh filename="package:://chefbot_description/meshes/piCamera.stl" scale="0.005 0.005 0.005"/>-->
                 </geometry>
             </collision>
             <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_radius}" h="${wheel_thick}" />
