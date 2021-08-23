@@ -1,5 +1,11 @@
 <launch>
-    <node pkg='cv_camera' type='cv_camera_node' name='cv_cmaera' output='screen'/>
+    <node pkg='cv_camera' type='cv_camera_node' name='cv_camera' output='screen' />
+    <!-- 
+    <node name="image_view" pkg='image_view' type='image_view' respawn="false" output="screen">
+        <param name="autosize" value="true" />
+        <param name="image_transport" value="compressed" />
+    </node>
+    -->
     <!-- if camrea is in urdf, then robot_state_publish will take care of tf transformation 
     <node pkg='tf' type='static_transform_publisher' name='camera_frames_pub' args='0.07 0.0 0.1 0 0 0 /base_link /camera 35'/>    
     -->

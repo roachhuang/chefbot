@@ -100,11 +100,14 @@ the ~ (tilde) at the beginning of the parameter name indicates that this is a pr
 6. launch pi.launch 
 7. launch heavy_load from pc to test motors
 
-8. // Navigation // 
-9. kill heavy_load session
-10. connect lidar cable to pi4 (make sure it starts to spin)
-11. launch lidar from pi4
-12. launch nav from pc
+// Navigation // 
+1. roslaunch chefbot_bringup hub.launch from pi
+2. connect lidar cable to pi4 (make sure it starts to spin)
+3. roslaunch slam slam.launch from pi   // run pi(run camera) and lidar
+4. roslaunch nav nav.launch from pc
+5. refer to a systematic approach page 454 
+6. rosrun rqt_reconfigure rqt_reconfigure
+7. tunning: l_inflation_radius: < 0.09, g_inflation_radius: 0.11 ~ 0.17, cost_scaling_factor:3.0
 
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 
@@ -125,7 +128,8 @@ to do:
     check out joint limit
     calibrate motor ticks and camera
     connect imu's ad0 to ground so it address will be fixed at 0x68
-    udev rules for fixing ttyusbX for a usb device
+
+    udev rules for fixing ttyusbX for a usb device       
         0. Udev stores all the rules in the /etc/udev/rules.d/ 
         1. connect a device to a usb port, dmesg|grep 
         2. udevadm info -a -p  $(udevadm info -q path -n /dev/ttyUSB0) |grep serial
@@ -165,6 +169,10 @@ to do:
         git checkout <branch or tag>    
         git checkout master
         git stash pop
+
+permission:
+    sudo usermod -aG video $USER
+    sudo usermod -aG dialout $USER
         
     
     

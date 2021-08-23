@@ -29,12 +29,21 @@ obstacle_layer:
     observation_sources: laser
     laser: {sensor_frame: lidar_link, data_type: LaserScan, clearing: true, marking: true, topic: scan, inf_is_valid: true}
 
-inflation:
-    enabled: true
+#inflation:
+    #enabled: true
     # inflation_radius: 0.03
     #inflation_radius: 1.75
-    inflation_radius: 0.06   
-    cost_scaling_factor: 2.58
+    #inflation_radius: 0.06       
+    #cost_scaling_factor: 2.58
 
     # exp(-1.0 * cost_scaling_factor *(distance_from_obstacle - inscribed_radius)) *(254 - 1)
     #cost_scaling_factor: 0.5
+
+inflation_g:
+    inflation_radius: 0.11
+    cost_scaling_factor: 5
+    
+inflation_l:    
+    inflation_radius: 0.04
+    cost_scaling_factor: 3
+

@@ -8,4 +8,4 @@ height: 2
 
 plugins:
   - {name: obstacle_layer,  type: "costmap_2d::ObstacleLayer"}
-  - {name: inflation,       type: "costmap_2d::InflationLayer"}
+  - {name: inflation_l,       type: "costmap_2d::InflationLayer"}

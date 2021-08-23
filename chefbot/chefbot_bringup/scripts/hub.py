@@ -25,7 +25,7 @@ from std_msgs.msg import Int64, Float32, String, Header
 
 # Class to handle serial data from Launchpad and converted to ROS topics
 
-class LaunchpadClass:
+class LaunchpadClass():
     def __init__(self, port='/dev/ttyUSB0', baudrate=115200):
         # Sensor variables
         self._Counter = 0
@@ -96,15 +96,13 @@ class LaunchpadClass:
         self._left_wheel_speed_ = left_speed.data
         # rospy.loginfo(left_speed.data)
         # speed_message = 's %f %f\r' %(int(self._left_wheel_speed_),int(self._right_wheel_speed_))
-        speed_message = 's %f %f\r' % (
-            self._left_wheel_speed_, self._right_wheel_speed_)
+        speed_message = 's %.2f %.2f\r' % (self._left_wheel_speed_, self._right_wheel_speed_)
         self._WriteSerial(speed_message)
 
     def _Update_Right_Speed(self, right_speed):
         self._right_wheel_speed_ = right_speed.data
         # rospy.loginfo(right_speed.data)
-        speed_message = 's %f %f\r' % (
-            self._left_wheel_speed_, self._right_wheel_speed_)
+        speed_message = 's %.2f %.2f\r' % (self._left_wheel_speed_, self._right_wheel_speed_)
         self._WriteSerial(speed_message)
 
     # Calculate orientation from accelerometer and gyrometer
@@ -217,6 +215,7 @@ if __name__ == '__main__':
     rospy.init_node('hub', anonymous=True)
 
     # Get serial port and baud rate of Tiva C Launchpad
+    # ~ means local params
     port=rospy.get_param("~port", "/dev/ttyUSB0")
     baudRate=int(rospy.get_param("~baudRate", 115200))
     rospy.loginfo("Starting with serial port: " +
