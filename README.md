@@ -91,6 +91,7 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 
 the ~ (tilde) at the beginning of the parameter name indicates that this is a private name specic to one node. Perhaps the easiest way to assign such a parameter is to include it between the node tags in a launch
 
+0. passwd - Sxx1x5
 1. unplug arduino and lidar cables
 2. power on pi4
 3. ssh pi4 (to make sure pi4 is on)
@@ -109,7 +110,7 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 
 python3 -m pip install pyserial
 sudo adduser your_username dialout
-
+install urdf-tutorials
 
 to do:
     use encoder.h in arduino. refer to MIT212 lab's example
@@ -140,8 +141,9 @@ to do:
     tf2:
         sudo apt-get install ros-noetic-tf2-tools
     do i need to broadcast imu?
-
+    rostopic bw /camera/rgb/image color
     debgging:
+        cv_camer and usb_camera consume about the same cpu resources. choose raw image topic in rviz for fewer resources usage.
         right wheel threshold 45
         why robot won't move?
             1. check /etc/ttyUSB0 & 1

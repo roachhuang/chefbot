@@ -83,7 +83,8 @@
         <link name="${prefix}_caster">
             <visual>                
                 <geometry>
-                    <sphere radius="${caster_radius}" />
+                    <!-- <sphere radius="${caster_radius}" /> -->
+                    <mesh filename="package://urdf_tutorial/meshes/caster_wheel.stl" scale='0.8 0.8 0.8'/>
                 </geometry>
                 <material name="white" />
             </visual>
@@ -99,7 +100,8 @@
             <axis xyz="0 0 1" rpy="0 0 0" />
             <parent link="base_link" />
             <child link="${prefix}_caster" />
-            <origin xyz="${x_reflect*caster_xoff} 0 -${caster_radius}" rpy="0 0 0" />
+            <!-- <origin xyz="${x_reflect*caster_xoff} 0 -${caster_radius}" rpy="0 0 0" /> -->
+            <origin xyz="${x_reflect*caster_xoff} 0 0" rpy="-1.571 0 1.571" /> 
         </joint>
     </xacro:macro>
 

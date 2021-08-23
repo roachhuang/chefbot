@@ -100,7 +100,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <box size="${cameraSize} ${cameraSize} ${cameraSize}" />
+        <box size="${cameraSize} ${cameraSize} ${cameraSize}" />          
       </geometry>
       <material name="red" />
     </visual>
