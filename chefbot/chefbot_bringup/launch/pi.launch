@@ -30,7 +30,5 @@
     </node>
     
     <node pkg="chefbot_navig_cpp" type="diff_tf" name="diff_tf" output="screen" >        
-    </node>
-
-    <include file="$(find chefbot_bringup)/launch/cv_camera.launch"></include>
+    </node>    
 </launch>

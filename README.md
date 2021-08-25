@@ -1,75 +1,4 @@
-# Learning Robotics using Python 
-
-#### [Learning Robotics using Python](http://learn-robotics.com) book tutorials source code
-![book_cover](http://learn-robotics.com/images/section-image-1.jpg
- "Learning Robotics using Python")
-
-### Installation
-The code is comaptible with ROS Jade and ROS Indigo. The detail installation instruction of each packages is mentioned on the book
-
-### Tutorials
-* **Chapter 1**:  Introduction to Robotics
-* **Chapter 2**: Mechanical design of a service Robot 
-* **Chapter 3**: Working with Robot Simulation using ROS and Gazebo
-* **Chapter 4**: Designing Chefbot Hardware 
-* **Chapter 5**: Working with Robotic Actuators and Wheel Encoders 
-* **Chapter 6**: Working with Robotic Sensors 
-* **Chapter 7**: Programming Vision Sensors using Python and ROS 
-* **Chapter 8**: Working with Speech Recognition and Synthesis using Python and ROS
-* **Chapter 9**: Applying Artificial Intelligence to Chefbot using Python
-* **Chapter 10**: Integration of Chefbot hardware and interfacing it into ROS, using Python
-* **Chapter 11**: Designing a GUI for a robot using QT and Python 
-* **Chapter 12**: The calibration and testing of Chefbot
-
-
-# ROS Robotics Projects
-
-#### [ROS Robotics Projects](http://rosrobots.com) 
-![book_cover](http://rosrobots.com/img/ebook.png
- "ROS Robotics Projects")
-
-### Installation
-The code is comaptible with ROS melodic and ROS Indigo. The detail installation instruction of each packages is mentioned on the book
-
-### Tutorials
-* **Chapter 1:**  Getting Started with ROS Robotics Application Development
-* **Chapter 2**:  Face Detection and Tracking Using ROS, OpenCV and Dynamixel Servos
-* **Chapter 3**:  Building a Siri-Like Chatbot in ROS
-* **Chapter 4**:  Controlling Embedded Boards Using ROS
-* **Chapter 5**:  Teleoperate a Robot Using Hand Gestures
-* **Chapter 6**:  Object Detection and Recognition
-* **Chapter 7**:  Deep Learning Using ROS and TensorFlow
-* **Chapter 8**:  ROS on MATLAB and Android
-* **Chapter 9**:  Building an Autonomous Mobile Robot
-* **Chapter 10**: Creating a Self-driving Car Using ROS!
-* **Chapter 11**: Teleoperating Robot Using VR Headset and Leap Motion
-* **Chapter 12**: Controlling Your Robots over the Web
-
-# Mastering ROS for Robotics Programming 
-
-#### [Mastering ROS for Robotics Programming](http://mastering-ros.com) book tutorials source code
-![book_cover](http://mastering-ros.com/images/section-image-1.jpg
- "Mastering ROS for Robotics Programming")
-
-### Installation
-The code is comaptible with ROS Jade and ROS Indigo. The detail installation instruction of each packages is mentioned on the book
-
-### Tutorials
-* **Chapter 1:**  Introduction to ROS and its Package Management
-* **Chapter 2**: Working with 3D Robot Modeling in ROS
-* **Chapter 3**: Simulating Robots Using ROS and Gazebo
-* **Chapter 4**: Using ROS MoveIt! and Navigation stack
-* **Chapter 5**: Working with Pluginlib, Nodelets and Gazebo plugins
-* **Chapter 6**: Writing ROS Controllers and Visualization plugins
-* **Chapter 7**: Interfacing I/O boards, sensors and actuators to ROS
-* **Chapter 8**: Programming Vision sensors using ROS, Open-CV and PCL
-* **Chapter 9**: Building and interfacing a differential drive mobile robot hardware in ROS
-* **Chapter 10**: Exploring advanced capabilities of ROS-MoveIt!
-* **Chapter 11**: ROS for Industrial Robots
-* **Chapter 12**: Troubleshooting and best practices in ROS
-
 roslaunch turtlebot_teleop keyboard_teleop.launch
-
 
 sudo apt-get install ros-melodic-depthimage-to-laserscan ros-melodic-
 kobuki-gazebo-plugins ros-melodic-robot-pose-ekf ros-melodic-yocs-cmd-vel-
@@ -116,11 +45,66 @@ sudo adduser your_username dialout
 install urdf-tutorials
 
 to do:
+    auto ros ros on startup:
+        https://blog.roverrobotics.com/how-to-run-ros-on-startup-bootup/
+        /etc/systemd/system/roscore.service
+            [Unit]
+            After=NetworkManager.service time-sync.target
+            [Service]
+            Type=forking
+            User=[TODO enter user name here]
+            # Start roscore as a fork and then wait for the tcp port to be opened
+            # —————————————————————-
+            # Source all the environment variables, start roscore in a fork
+            # Since the service type is forking, systemd doesn’t mark it as
+            # ‘started’ until the original process exits, so we have the
+            # non-forked shell wait until it can connect to the tcp opened by
+            # roscore, and then exit, preventing conflicts with dependant services
+            ExecStart=/bin/sh -c “./opt/ros/melodic/setup.sh; . /etc/ros/env.sh; roscore & while ! echo exit | nc localhost 11311 > /dev/null; do sleep 1; done”
+            [Install]
+            WantedBy=multi-user.target
+        /etc/ros/env.sh
+            #!/bin/sh
+            export ROS_HOSTNAME=$(hostname).localexport ROS_MASTER_URI=http://$ROS_HOSTNAME:11311﻿
+        /etc/systemd/system/roslaunch.service
+            [Unit]
+            Requires=roscore.service
+            PartOf=roscore.service
+            After=NetworkManager.service time-sync.target roscore.service
+            [Service]
+            Type=simple
+            User=[TODO enter user name here]
+            ExecStart=/usr/sbin/roslaunch
+            [Install]
+            WantedBy=multi-user.target
+        /usr/sbin/roslaunch
+            #!/bin/bash
+            source ~/catkin_ws/devel/setup.bash
+            source /etc/ros/env.sh
+            export ROS_HOME=$(echo ~[TODO unter your username here)/.ros
+            [TODO place your roslaunch command here] &
+            PID=$!
+            wait “$PID”
+
+        sudo systemctl enable roscore.service
+        sudo systemctl enable roslaunch.service
+        sudo chmod +x /usr/sbin/roslaunch
+
+    autologon:
+        https://ubuntuqa.com/zh-tw/article/9109.html
+    camera calibration：
+        refer to Page 450 of effective robtoics programming w/ ros
+        pg 312 of mastering ROS for robtoics programming
+        calibrating kinect:
+            pg 404 of ros robotics by example 2nd editoin
+     rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.108 image:=ccamera/image_raw camera:=/cv_camera
+
+    upgrade to ROS 2.0
+     
     use encoder.h in arduino. refer to MIT212 lab's example
     substitute messenger with serial.event
     pi is operating at 3.3v. ardunio like due and teensy also use 3.3v so no voltage level-shifter is required.
-    sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
-    
+    sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target    
 
     pub battery info
     Use 2 ’s complement arithmetic to subtract previous from current readings to obtain position increment.
@@ -129,17 +113,19 @@ to do:
     calibrate motor ticks and camera
     connect imu's ad0 to ground so it address will be fixed at 0x68
 
-    udev rules for fixing ttyusbX for a usb device       
+    udev rules for fixing ttyusbX for a usb device
+        https://blog.csdn.net/qq_16775293/article/details/81332690   
+        lsusb to check idProd and idVendor      
         0. Udev stores all the rules in the /etc/udev/rules.d/ 
         1. connect a device to a usb port, dmesg|grep 
         2. udevadm info -a -p  $(udevadm info -q path -n /dev/ttyUSB0) |grep serial
         3. look for serial and product
-        4. ACTION=="add", ATTRS{product}=="<product>", ATTRS{serial}=="<serial>", SYMLINK+="arduion"
+        4. ACTION=="add", ATTRS{idVendor}=="", ATTR<idProduct>=="", SYMLINK+="arduion"
         5. uplug your devce and re-plug it in, and check the /dev/arduino
+        6. a reboot may require
         =====================================================================
         rosrun turtlebot3_bringup create_udev_rules
-        sudo udevadm control --reload
-        sudo udevadm trigger
+        sudo udevadm control --reload-rules && sudo service udev restart && udevadm trigger
     refer to turtlebot setup to enable boot before wifi available
     study vel limitation of h/w interefece 
     tf2:

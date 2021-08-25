@@ -12,6 +12,7 @@
         angular resolution 1 degree
     -->
 
-    <include file="$(find slam)/launch/lidar.launch"></include>    
+    <include file="$(find slam)/launch/lidar.launch"></include> 
+    <include file="$(find chefbot_bringup)/launch/cv_camera.launch"></include>   
     
 </launch>

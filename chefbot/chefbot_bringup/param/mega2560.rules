@@ -1,2 +1,2 @@
-KERNEL=="ttyUSB[0-9]*, SUBSYSTEMACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", MODE:="0666", SYMLINK+="arduino"
-KERNEL=="ttyUSB[0-9]*, SUBSYSTEMACTION=="add", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0666", SYMLINK+="lidar"
+suKERNEL=="ttyUSB[0-9]*, ACTION=="add", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", MODE:="0666", SYMLINK+="arduino"
+KERNEL=="ttyUSB[0-9]*, ACTION=="add", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", MODE:="0666", SYMLINK+="lidar"
