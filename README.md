@@ -45,7 +45,13 @@ sudo adduser your_username dialout
 install urdf-tutorials
 
 to do:
-    auto ros ros on startup:
+    sudo systemctl start roscore
+    sudo systemctl daemon-reload
+    systemctl status roscore
+    sudo systemctl enable roscore
+
+    auto ros on startup:
+        https://qiita.com/strv/items/535a370842ae60af9b64
         https://blog.roverrobotics.com/how-to-run-ros-on-startup-bootup/
         /etc/systemd/system/roscore.service
             [Unit]
@@ -95,9 +101,10 @@ to do:
     camera calibration：
         refer to Page 450 of effective robtoics programming w/ ros
         pg 312 of mastering ROS for robtoics programming
+        save the camera.yaml to /home/roach/.ros/camera_info/
         calibrating kinect:
             pg 404 of ros robotics by example 2nd editoin
-     rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.108 image:=ccamera/image_raw camera:=/cv_camera
+     rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.108 image:=camera/image_raw camera:=/cv_camera
 
     upgrade to ROS 2.0
      
@@ -114,8 +121,9 @@ to do:
     connect imu's ad0 to ground so it address will be fixed at 0x68
 
     udev rules for fixing ttyusbX for a usb device
+        Check that your rule follows the naming convention – <priority>-<device name>.rules. Technically you can have multiple rules for the same device, and the number determines what order they’d get executed in. Since we’re writing addon rules, a priority of 99 is safest.
         https://blog.csdn.net/qq_16775293/article/details/81332690   
-        lsusb to check idProd and idVendor      
+        lsusb to check idVendor and idProduct (in idVendor:idProduct order)
         0. Udev stores all the rules in the /etc/udev/rules.d/ 
         1. connect a device to a usb port, dmesg|grep 
         2. udevadm info -a -p  $(udevadm info -q path -n /dev/ttyUSB0) |grep serial
@@ -132,6 +140,11 @@ to do:
         sudo apt-get install ros-noetic-tf2-tools
     do i need to broadcast imu?
     rostopic bw /camera/rgb/image color
+
+    // https://www.ross-robotics.co.uk/news/ros-web-tutorial-part-2-working-with-cameras
+    // To learn more about our camera we will execute the following command in a terminal:
+    v4l2-ctl --list-formats-ext -d /dev/video0
+
     debgging:
         cv_camer and usb_camera consume about the same cpu resources. choose raw image topic in rviz for fewer resources usage.
         right wheel threshold 45
