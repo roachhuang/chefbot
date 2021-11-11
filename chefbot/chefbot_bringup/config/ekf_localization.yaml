@@ -1,18 +1,18 @@
-frequency: 30
+frequency: 30.0
 
 two_d_mode: true
-publish_tf: false
+#publish_tf: false
 
 map_frame: map              # Defaults to "map" if unspecified
 odom_frame: odom            # Defaults to "odom" if unspecified
-base_link_frame: base_footprint  # Defaults to "base_link" if unspecified
+base_link_frame: base_link  # Defaults to "base_link" if unspecified
 world_frame: odom           # Defaults to the value of odom_frame if unspecified
 
 odom0: odom   # Fill in the correct topic here!
 #odom1: odom1_topic/odom # Make sure it's of the correct message type!
-odom0_config: [false, false, false,   # x, y, z
-               false, false, true,    # roll, pitch, yaw
-               true, true, false,     # x vel, y vel, z vel
+odom0_config: [true,  true,  true,    # x, y, z
+               false, false, false,   # roll, pitch, yaw
+               false, false, false,   # x vel, y vel, z vel
                false, false, true,    # roll vel, pitch vel, yaw vel
                false, false, false]   # x accel, y accel, z accel
 odom0_differential: false
@@ -25,15 +25,15 @@ odom0_differential: false
 
 imu0: /imu/data   # But STILL same
 imu0_config: [false, false, false,
-               false, false, true,
-               false, false, false,
-               false, false, true,
-               true, false, false]
-imu0_differential: false
+              true,  true,  true,
+              false, false, false,
+              false, false, false,
+              false, false, false]
+# imu0_differential: false
 
 print_diagnostics: true
-odom0_queue_size: 5
-imu0_queue_size: 5
+#odom0_queue_size: 5
+#imu0_queue_size: 5
 
 #imu1: imu1_topic
 
