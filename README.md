@@ -1,3 +1,6 @@
+tf:
+  tf broadcaster: broadcast coordinate frames of a robot to tf. 
+
 roslaunch turtlebot_teleop keyboard_teleop.launch
 
 sudo apt-get install ros-melodic-depthimage-to-laserscan ros-melodic-
@@ -12,7 +15,7 @@ setpoint: /roachbot/lwheel/command
 feedback: h/w interface read method
 cmd: h/w interface write method
 
-1. hub.launch
+1. roslaunch chefbot_bringup hub.launch
 2. pc or pi.launch
 3. heavy_load.launch
 
@@ -49,55 +52,7 @@ to do:
     sudo systemctl daemon-reload
     systemctl status roscore
     sudo systemctl enable roscore
-
-    auto ros on startup:
-        https://qiita.com/strv/items/535a370842ae60af9b64
-        https://blog.roverrobotics.com/how-to-run-ros-on-startup-bootup/
-        /etc/systemd/system/roscore.service
-            [Unit]
-            After=NetworkManager.service time-sync.target
-            [Service]
-            Type=forking
-            User=[TODO enter user name here]
-            # Start roscore as a fork and then wait for the tcp port to be opened
-            # —————————————————————-
-            # Source all the environment variables, start roscore in a fork
-            # Since the service type is forking, systemd doesn’t mark it as
-            # ‘started’ until the original process exits, so we have the
-            # non-forked shell wait until it can connect to the tcp opened by
-            # roscore, and then exit, preventing conflicts with dependant services
-            ExecStart=/bin/sh -c “./opt/ros/melodic/setup.sh; . /etc/ros/env.sh; roscore & while ! echo exit | nc localhost 11311 > /dev/null; do sleep 1; done”
-            [Install]
-            WantedBy=multi-user.target
-        /etc/ros/env.sh
-            #!/bin/sh
-            export ROS_HOSTNAME=$(hostname).localexport ROS_MASTER_URI=http://$ROS_HOSTNAME:11311﻿
-        /etc/systemd/system/roslaunch.service
-            [Unit]
-            Requires=roscore.service
-            PartOf=roscore.service
-            After=NetworkManager.service time-sync.target roscore.service
-            [Service]
-            Type=simple
-            User=[TODO enter user name here]
-            ExecStart=/usr/sbin/roslaunch
-            [Install]
-            WantedBy=multi-user.target
-        /usr/sbin/roslaunch
-            #!/bin/bash
-            source ~/catkin_ws/devel/setup.bash
-            source /etc/ros/env.sh
-            export ROS_HOME=$(echo ~[TODO unter your username here)/.ros
-            [TODO place your roslaunch command here] &
-            PID=$!
-            wait “$PID”
-
-        sudo systemctl enable roscore.service
-        sudo systemctl enable roslaunch.service
-        sudo chmod +x /usr/sbin/roslaunch
-
-    autologon:
-        https://ubuntuqa.com/zh-tw/article/9109.html
+ 
     camera calibration：
         refer to Page 450 of effective robtoics programming w/ ros
         pg 312 of mastering ROS for robtoics programming
@@ -145,7 +100,8 @@ to do:
     // To learn more about our camera we will execute the following command in a terminal:
     v4l2-ctl --list-formats-ext -d /dev/video0
 
-    debgging:
+    DEBUGGING:
+        arduino: Wire.setWireTimeout(3000, true); // note that this line is to fix imu freezing issue. timeout value in uSec
         cv_camer and usb_camera consume about the same cpu resources. choose raw image topic in rviz for fewer resources usage.
         right wheel threshold 45
         why robot won't move?
@@ -173,5 +129,66 @@ permission:
     sudo usermod -aG video $USER
     sudo usermod -aG dialout $USER
         
-    
+urdf:
+    eg. <origin xyz '0 0 0.5' rpy='0 0 0'> in a joint1  
+
+HOW to:
+    1. paste clipboard to putty: shift-ins
+    2. chown -R $USER ～/.hub.sh
+    3. install gitignore extn from codezombie. shift-ctrl-p, add gitignore 
+    4. catkin_make --only-pkg-with-deps <pkg>
+
+       auto ros on startup:
+        https://qiita.com/strv/items/535a370842ae60af9b64
+        https://blog.roverrobotics.com/how-to-run-ros-on-startup-bootup/
+        /etc/systemd/system/roscore.service
+            [Unit]
+            After=NetworkManager.service time-sync.target
+            [Service]
+            Type=forking
+            User=[TODO enter user name here]
+            # Start roscore as a fork and then wait for the tcp port to be opened
+            # —————————————————————-
+            # Source all the environment variables, start roscore in a fork
+            # Since the service type is forking, systemd doesn’t mark it as
+            # ‘started’ until the original process exits, so we have the
+            # non-forked shell wait until it can connect to the tcp opened by
+            # roscore, and then exit, preventing conflicts with dependant services
+            ExecStart=/bin/sh -c “./opt/ros/melodic/setup.sh; . /etc/ros/env.sh; roscore & while ! echo exit | nc localhost 11311 > /dev/null; do sleep 1; done”
+            [Install]
+            WantedBy=multi-user.target
+        /etc/ros/env.sh
+            #!/bin/sh
+            export ROS_HOSTNAME=$(hostname).localexport ROS_MASTER_URI=http://$ROS_HOSTNAME:11311﻿
+        /etc/systemd/system/roslaunch.service
+            [Unit]
+            Requires=roscore.service
+            PartOf=roscore.service
+            After=NetworkManager.service time-sync.target roscore.service
+            [Service]
+            Type=simple
+            User=[TODO enter user name here]
+            ExecStart=/usr/sbin/roslaunch
+            [Install]
+            WantedBy=multi-user.target
+        /usr/sbin/roslaunch
+            #!/bin/bash
+            source ~/catkin_ws/devel/setup.bash
+            source /etc/ros/env.sh
+            export ROS_HOME=$(echo ~[TODO unter your username here)/.ros
+            [TODO place your roslaunch command here] &
+            PID=$!
+            wait “$PID”
+
+        sudo systemctl enable roscore.service
+        sudo systemctl enable roslaunch.service
+        sudo chmod +x /usr/sbin/roslaunch
+
+    autologon:
+        sudo systemctl edit getty@tty1.service
+            [Service]
+            ExecStart=
+            ExecStart=-/sbin/agetty --noissue --autologin myusername %I $TERM
+            Type=idle
+
     

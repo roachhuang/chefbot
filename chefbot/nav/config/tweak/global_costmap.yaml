@@ -1,6 +1,7 @@
 # don't change it. good enough!
 
 global_frame: map
+update_frequency: 1.0
 static_map: true
 rolling_window: false
 track_unknown_space: true

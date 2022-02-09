@@ -279,6 +279,7 @@ void Odometry_calc::update()
 		odom.pose.pose.position.x = x_final;
 		odom.pose.pose.position.y = y_final;
 		odom.pose.pose.position.z = 0.0;
+		// odom.pose.pose.orientation = odom_quat;
 		odom.pose.pose.orientation.x = odom_quat.x();
 		odom.pose.pose.orientation.y = odom_quat.y();
 		odom.pose.pose.orientation.z = odom_quat.z();

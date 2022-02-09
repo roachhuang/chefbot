@@ -1,14 +1,17 @@
 frequency: 30
 
 two_d_mode: true
-publish_tf: false
+# publish_tf: true
 
 map_frame: map              # Defaults to "map" if unspecified
 odom_frame: odom            # Defaults to "odom" if unspecified
-base_link_frame: base_footprint  # Defaults to "base_link" if unspecified
+base_link_frame: base_link  # Defaults to "base_link" if unspecified
 world_frame: odom           # Defaults to the value of odom_frame if unspecified
+sensor_timeout: 1.0
+odom_used: true
+imu_used: true
 
-odom0: odom   # Fill in the correct topic here!
+odom0: /odom   # Fill in the correct topic here!
 #odom1: odom1_topic/odom # Make sure it's of the correct message type!
 odom0_config: [false, false, false,   # x, y, z
                false, false, true,    # roll, pitch, yaw
@@ -31,9 +34,9 @@ imu0_config: [false, false, false,
                true, false, false]
 imu0_differential: false
 
-print_diagnostics: true
-odom0_queue_size: 5
-imu0_queue_size: 5
+#print_diagnostics: true
+#odom0_queue_size: 5
+#imu0_queue_size: 5
 
 #imu1: imu1_topic
 

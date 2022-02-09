@@ -15,18 +15,14 @@
       <visual>
         <origin xyz="0 0 0" rpy="${flipY*M_PI/2} 0  0 " /> 
         <geometry>
-          <!-- <cylinder length="${wheel_height}" radius="${wheel_radius}" /> -->
-          <mesh filename="package:://chefbot_description/meshes/wheel.dae"/>
+          <cylinder length="${wheel_height}" radius="${wheel_radius}" />
         </geometry>
         <material name="DarkGray" />
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="${flipY*M_PI/2} 0 0 " />        
+        <origin xyz="0 0 0" rpy="${flipY*M_PI/2} 0 0 " />
         <geometry>
-          <!--
           <cylinder length="${wheel_height}" radius="${wheel_radius}" />
-          -->
-          <mesh filename="package:://chefbot_description/meshes/wheel.dae"/>
         </geometry>
       </collision>
       <inertial>
@@ -63,7 +59,7 @@
       <joint name="${fb}_${lr}_wheel_joint" />
       <actuator name="${fb}_${lr}_wheel_joint_motor">
         <hardwareInterface>EffortJointInterface</hardwareInterface>
-        <mechanicalReduction>10</mechanicalReduction>
+        <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
    

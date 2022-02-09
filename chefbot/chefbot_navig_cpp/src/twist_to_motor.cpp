@@ -89,6 +89,7 @@ void TwistToMotors::spin()
 
 	ticks_since_target = timeout_ticks;
 
+	// can i comment out this line?
 	while (ros::ok())
 	{
 		while (ros::ok() && (ticks_since_target <= timeout_ticks))
@@ -136,6 +137,7 @@ void TwistToMotors::twistCallback(const geometry_msgs::Twist &msg)
 
 int main(int argc, char **argv)
 {
+	// can i say it base_controller?
 	ros::init(argc, argv, "twist_to_motor");
 	TwistToMotors obj;
 

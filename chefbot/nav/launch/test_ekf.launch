@@ -1,0 +1,19 @@
+<launch>
+    <!-- Arguments -->
+    <arg name="open_rviz" default="true" />    
+    <arg name="model" default="$(find chefbot_description)/urdf/kbot.xacro"/>
+       
+    <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/> 
+  
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">    
+    </node>
+  
+    <!-- rviz -->
+    <group if="$(arg open_rviz)">
+      <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find nav)/rviz/turtlebot3_navigation.rviz" />
+    </group>
+  
+    <include file="$(find chefbot_bringup)/launch/ekf.launch" />
+  
+  </launch>
+  

@@ -16,6 +16,9 @@ from time import sleep
 
 # Python client library for ROS
 import rospy
+import tf2_ros
+import tf_conversions
+
 # This module helps to receive values from serial port
 # from SerialDataGateway import SerialDataGateway
 # Importing ROS data type for IMU
@@ -25,6 +28,7 @@ from std_msgs.msg import Int64, Float32, String, Header
 
 # Class to handle serial data from Launchpad and converted to ROS topics
 
+
 class LaunchpadClass():
     def __init__(self, port='/dev/ttyUSB0', baudrate=115200):
         # Sensor variables
@@ -33,7 +37,7 @@ class LaunchpadClass():
         self._right_encoder_value = 0
         self._lwheel_vel_value = 0
         self._rwheel_vel_value = 0
-        
+
         self._left_wheel_speed_ = 0
         self._right_wheel_speed_ = 0
 
@@ -50,19 +54,19 @@ class LaunchpadClass():
         # wait for the arduino to reset
         sleep(2)
         # call every 1s
-        #rospy.Timer(rospy.Duration(1), self.timerCB)
+        # rospy.Timer(rospy.Duration(1), self.timerCB)
 
         # Subscribers and Publishers
         # Publisher for left and right wheel encoder values
         self._Left_Encoder = rospy.Publisher('lwheel', Int64, queue_size=10)
         self._Right_Encoder = rospy.Publisher('rwheel', Int64, queue_size=10)
         self.pub_lvel = rospy.Publisher('lwheel_vel', Float32, queue_size=10)
-        self.pub_rvel = rospy.Publisher('rwheel_vel', Float32, queue_size=10)     
+        self.pub_rvel = rospy.Publisher('rwheel_vel', Float32, queue_size=10)
 
         # Publisher for entire serial data
         self._SerialPublisher = rospy.Publisher(
             'serial', String, queue_size=30)
-       
+
         # self.cal_offset = 0.0
         # self.orientation = 0.0
         # self.cal_buffer = []
@@ -96,13 +100,15 @@ class LaunchpadClass():
         self._left_wheel_speed_ = left_speed.data
         # rospy.loginfo(left_speed.data)
         # speed_message = 's %f %f\r' %(int(self._left_wheel_speed_),int(self._right_wheel_speed_))
-        speed_message = 's %.2f %.2f\r' % (self._left_wheel_speed_, self._right_wheel_speed_)
+        speed_message = 's %.2f %.2f\r' % (
+            self._left_wheel_speed_, self._right_wheel_speed_)
         self._WriteSerial(speed_message)
 
     def _Update_Right_Speed(self, right_speed):
         self._right_wheel_speed_ = right_speed.data
         # rospy.loginfo(right_speed.data)
-        speed_message = 's %.2f %.2f\r' % (self._left_wheel_speed_, self._right_wheel_speed_)
+        speed_message = 's %.2f %.2f\r' % (
+            self._left_wheel_speed_, self._right_wheel_speed_)
         self._WriteSerial(speed_message)
 
     # Calculate orientation from accelerometer and gyrometer
@@ -112,49 +118,58 @@ class LaunchpadClass():
 
         # if (len(line) > 0):
         lineParts = line.split('\t')
-        try:
-            if (lineParts[0] == 'e'):
-                self._left_encoder_value = long(lineParts[1])
-                self._right_encoder_value = long(lineParts[2])
-                self._Left_Encoder.publish(self._left_encoder_value)
-                self._Right_Encoder.publish(self._right_encoder_value)
+        # try:
+        if (lineParts[0] == 'e'):
+            self._left_encoder_value = int(lineParts[1])
+            self._right_encoder_value = int(lineParts[2])
+            self._Left_Encoder.publish(self._left_encoder_value)
+            self._Right_Encoder.publish(self._right_encoder_value)
 
-            elif (lineParts[0] == 'v'):
-                self._rwheel_vel_value = float(lineParts[1])
-                self._lwheel_vel_value = float(lineParts[2])
-                self.pub_lvel.publish(self._lwheel_vel_value)
-                self.pub_rvel.publish(self._rwheel_vel_value)
+        elif (lineParts[0] == 'v'):
+            self._rwheel_vel_value = float(lineParts[1])
+            self._lwheel_vel_value = float(lineParts[2])
+            self.pub_lvel.publish(self._lwheel_vel_value)
+            self.pub_rvel.publish(self._rwheel_vel_value)
 
-                #self.ser.reset_input_buffer()                               
+            # self.ser.reset_input_buffer()
 
-            elif (lineParts[0] == 'i'):
-                self._qx = float(lineParts[1])
-                self._qy = float(lineParts[2])
-                self._qz = float(lineParts[3])
-                self._qw = float(lineParts[4])
-                    
-                imu_msg = Imu()
-                h = Header()
-                h.stamp = rospy.Time.now()
-                h.frame_id = 'base_link'
-                imu_msg.header = h
+        elif (lineParts[0] == 'i'):
+            self._qx = float(lineParts[1])
+            self._qy = float(lineParts[2])
+            self._qz = float(lineParts[3])
+            self._qw = float(lineParts[4])
 
-                imu_msg.orientation_covariance = (-1., )*9
-                imu_msg.angular_velocity_covariance = (-1., )*9
-                imu_msg.linear_acceleration_covariance = (-1., )*9
+            imu_msg = Imu()
+            h = Header()
+            h.stamp = rospy.Time.now()
+            h.frame_id = 'base_link'
+            imu_msg.header = h
 
-                imu_msg.orientation.x = self._qx
-                imu_msg.orientation.y = self._qy
-                imu_msg.orientation.z = self._qz
-                imu_msg.orientation.w = self._qw
+            imu_msg.orientation_covariance = (-1., )*9
+            imu_msg.angular_velocity_covariance = (-1., )*9
+            imu_msg.linear_acceleration_covariance = (-1., )*9
 
-                self.imu_pub.publish(imu_msg)
-            else:
-                rospy.logerr('wrong data: %s', lineParts[0])
-        except:
-            rospy.logwarn("Error in Sensor values")
-            rospy.logwarn(lineParts)
-            pass
+            imu_msg.orientation.x = self._qx
+            imu_msg.orientation.y = self._qy
+            imu_msg.orientation.z = self._qz
+            imu_msg.orientation.w = self._qw
+
+            imu_msg.linear_acceleration.x = float(lineParts[5])
+            imu_msg.linear_acceleration.y = float(lineParts[6])
+            imu_msg.linear_acceleration.z = float(lineParts[7])
+
+            imu_msg.angular_velocity.x = float(lineParts[8])
+            imu_msg.angular_velocity.y = float(lineParts[9])
+            imu_msg.angular_velocity.z = float(lineParts[10])
+
+            self.imu_pub.publish(imu_msg)           
+           
+        else:
+            rospy.logerr('wrong data: %s', lineParts[0])
+            # except:
+            #    rospy.logwarn("Error in Sensor values")
+            #    rospy.logwarn(lineParts)
+            #    pass
 
     def _WriteSerial(self, message):
         # self._SerialPublisher.publish(String(str(self._Counter) + ", out: " + message))
@@ -167,38 +182,38 @@ class LaunchpadClass():
             raise e
 
     def ReadFromPort(self):
-        r=rospy.Rate(100)
+        r = rospy.Rate(100)
         while 1:
-            #if self.ser.is_open == False:
+            # if self.ser.is_open == False:
             #    rospy.logerr('disconnect')
             if self.ser.in_waiting > 0:
                 try:
-                    line=self.ser.readline()
+                    line = self.ser.readline()
                     self._HandleReceivedLine(line)
                 except:
                     rospy.logerr('cannot read!')
-                    self.ser.open()
+                    # self.ser.open()
                     pass
             r.sleep()
 
     def Start(self):
         rospy.logdebug("Start receiving...")
         thread = threading.Thread(target=self.ReadFromPort)
-        thread.start()               
+        thread.start()
 
         # self._SerialDataGateway.Start()
 
     def Stop(self):
-        rospy.logdebug("Stopping")        
+        rospy.logdebug("Stopping")
         self.ser.close()
-        #self._SerialDataGateway.Stop()
+        # self._SerialDataGateway.Stop()
 
     # def Subscribe_Speed(self):
     #    a = 1
 
     def Reset_Launchpad(self):
         # print "Reset"
-        reset='r\r'
+        reset = 'r\r'
         self._WriteSerial(reset)
         sleep(1)
         self._WriteSerial(reset)
@@ -216,12 +231,12 @@ if __name__ == '__main__':
 
     # Get serial port and baud rate of Tiva C Launchpad
     # ~ means local params
-    port=rospy.get_param("~port", "/dev/ttyUSB0")
-    baudRate=int(rospy.get_param("~baudRate", 115200))
+    port = rospy.get_param("~port", "/dev/ttyUSB0")
+    baudRate = int(rospy.get_param("~baudRate", 115200))
     rospy.loginfo("Starting with serial port: " +
                   port + ", baud rate: " + str(baudRate))
-    launchpad=LaunchpadClass(port, baudRate)
-    try:       
+    launchpad = LaunchpadClass(port, baudRate)
+    try:
         launchpad.Start()
         # a spin causes the main program to suspend, but keeps the callback function alive.
         rospy.spin()
