@@ -1,4 +1,4 @@
-frequency: 30
+frequency: 30.0
 
 two_d_mode: true
 # publish_tf: true
@@ -13,9 +13,9 @@ imu_used: true
 
 odom0: /odom   # Fill in the correct topic here!
 #odom1: odom1_topic/odom # Make sure it's of the correct message type!
-odom0_config: [false, false, false,   # x, y, z
-               false, false, true,    # roll, pitch, yaw
-               true, true, false,     # x vel, y vel, z vel
+odom0_config: [true,  true,  true,    # x, y, z
+               false, false, false,   # roll, pitch, yaw
+               false, false, false,   # x vel, y vel, z vel
                false, false, true,    # roll vel, pitch vel, yaw vel
                false, false, false]   # x accel, y accel, z accel
 odom0_differential: false
@@ -28,13 +28,13 @@ odom0_differential: false
 
 imu0: /imu/data   # But STILL same
 imu0_config: [false, false, false,
-               false, false, true,
-               false, false, false,
-               false, false, true,
-               true, false, false]
-imu0_differential: false
+              true,  true,  true,
+              false, false, false,
+              false, false, false,
+              false, false, false]
+# imu0_differential: false
 
-#print_diagnostics: true
+print_diagnostics: true
 #odom0_queue_size: 5
 #imu0_queue_size: 5
 

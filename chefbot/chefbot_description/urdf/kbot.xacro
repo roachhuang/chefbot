@@ -6,7 +6,7 @@
   
   <xacro:include filename="$(find chefbot_description)/urdf/kbot_macros.xacro" />
   
-  <!--
+  <!-- no  <origin xyz="0 0 0" rpy="0 0 0" /> is reuquired as default is 0
   <xacro:if value="${gazebo == 'true'}">
     <xacro:include filename="$(find chefbot_description)/urdf/kbot.gazebo" />
   </xacro:if>
@@ -16,7 +16,7 @@
        add a simple link without inertia and make a joint between it and the chassis
     -->
 
-  <link name="base_footprint">  
+
     <!-- 
     <xacro:box_inertia m="0.001" w="0.001" h="0.001" d="0.001" />
     <visual>
@@ -26,18 +26,15 @@
       </geometry>
   </visual>
     -->
-  </link>
 
   <link name="base_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
+    <visual>     
       <geometry>
         <cylinder radius="${base_radius}" length="${base_height}" />
       </geometry>
       <material name="gold" />
     </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0 " />
+    <collision>      
       <geometry>
         <cylinder radius="${base_radius}" length="${base_height}" />
       </geometry>
@@ -45,13 +42,15 @@
     <xacro:cylinder_inertia m="${base_mass}" r="${base_radius}" h="${base_height}" />    
   </link>
 
+  <link name="base_footprint"/>  
+
   <joint name="base_link_joint" type="fixed">
-    <origin xyz="0 0 ${(2*wheel_radius)}" rpy="0 0 0" />
-    <parent link="base_footprint" />
-    <child link="base_link" />
+    <origin xyz="0 0 ${-(2*wheel_radius+0.005)}" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="base_footprint" />
   </joint>
 
-  <xacro:wheel prefix="left" y_reflect="1" />
+  <xacro:wheel prefix="left"  y_reflect="1" />
   <xacro:wheel prefix="right" y_reflect="-1" />
 
   <xacro:caster prefix="front" x_reflect="1" />

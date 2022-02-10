@@ -1,5 +1,5 @@
-tf:
-  tf broadcaster: broadcast coordinate frames of a robot to tf. 
+The realtime_tools::RealtimePublisher allows users that write C++ realtime controllers to publish messages on a ROS topic from a hard realtime loop. The normal ROS publisher is not realtime safe, and should not be used from within the update loop of a realtime controller. The realtime publisher is a wrapper around the ROS publisher; the wrapper creates an extra non-realtime thread that publishes messages on a ROS topic.
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 roslaunch turtlebot_teleop keyboard_teleop.launch
 
@@ -15,11 +15,13 @@ setpoint: /roachbot/lwheel/command
 feedback: h/w interface read method
 cmd: h/w interface write method
 
-1. roslaunch chefbot_bringup hub.launch
-2. pc or pi.launch
+1. roslaunch chefbot_bringup hub.launch (pc or pi. depend on where arduino is connected to)
+2. roslaunch chefbot_bringup pi.launch (from pc or pi. )
 3. heavy_load.launch
+4. roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+
 
 the ~ (tilde) at the beginning of the parameter name indicates that this is a private name specic to one node. Perhaps the easiest way to assign such a parameter is to include it between the node tags in a launch
 
@@ -35,7 +37,7 @@ the ~ (tilde) at the beginning of the parameter name indicates that this is a pr
 // Navigation // 
 1. roslaunch chefbot_bringup hub.launch from pi
 2. connect lidar cable to pi4 (make sure it starts to spin)
-3. roslaunch slam slam.launch from pi   // run pi(run camera) and lidar
+3. roslaunch slam slam.launch from pi   // run pi (run camera) and lidar
 4. roslaunch nav nav.launch from pc
 5. refer to a systematic approach page 454 
 6. rosrun rqt_reconfigure rqt_reconfigure

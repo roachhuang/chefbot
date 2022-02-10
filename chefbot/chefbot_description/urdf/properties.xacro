@@ -52,7 +52,7 @@
 
   <!-- Wheels -->
   <xacro:property name="wheel_radius" value="0.034" />
-  <xacro:property name="wheel_thick" value="0.01" />
+  <xacro:property name="wheel_thick" value="0.025" />
   <xacro:property name="wheel_mass" value="0.5" /> <!-- in kg-->
   <xacro:property name="wheel_yGap" value="${base_radius*0.12}" />
   <xacro:property name="wheel_zoff" value="${wheel_radius+base_height/2}" />
