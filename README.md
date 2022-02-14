@@ -1,7 +1,8 @@
 The realtime_tools::RealtimePublisher allows users that write C++ realtime controllers to publish messages on a ROS topic from a hard realtime loop. The normal ROS publisher is not realtime safe, and should not be used from within the update loop of a realtime controller. The realtime publisher is a wrapper around the ROS publisher; the wrapper creates an extra non-realtime thread that publishes messages on a ROS topic.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-roslaunch turtlebot_teleop keyboard_teleop.launch
+
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 sudo apt-get install ros-melodic-depthimage-to-laserscan ros-melodic-
 kobuki-gazebo-plugins ros-melodic-robot-pose-ekf ros-melodic-yocs-cmd-vel-
@@ -15,6 +16,7 @@ setpoint: /roachbot/lwheel/command
 feedback: h/w interface read method
 cmd: h/w interface write method
 
+0. roslaunch chefbot_description view_kbot.launch (this is to veiw the robot in rviz)
 1. roslaunch chefbot_bringup hub.launch (pc or pi. depend on where arduino is connected to)
 2. roslaunch chefbot_bringup pi.launch (from pc or pi. )
 3. heavy_load.launch

@@ -259,14 +259,14 @@ void Odometry_calc::update()
 		odom_trans.transform.translation.x = x_final;
 		odom_trans.transform.translation.y = y_final;
 		odom_trans.transform.translation.z = 0.0;
-
+/*
 		odom_quat.setRPY(0, 0, theta_final);
 		odom_quat.normalize();
 		odom_trans.transform.rotation.x = odom_quat.x();
 		odom_trans.transform.rotation.y = odom_quat.y();
 		odom_trans.transform.rotation.z = odom_quat.z();
 		odom_trans.transform.rotation.w = odom_quat.w();
-
+*/
 		//send the transform
 		odom_broadcaster.sendTransform(odom_trans);
 
@@ -279,12 +279,14 @@ void Odometry_calc::update()
 		odom.pose.pose.position.x = x_final;
 		odom.pose.pose.position.y = y_final;
 		odom.pose.pose.position.z = 0.0;
+		/*
 		// odom.pose.pose.orientation = odom_quat;
 		odom.pose.pose.orientation.x = odom_quat.x();
 		odom.pose.pose.orientation.y = odom_quat.y();
 		odom.pose.pose.orientation.z = odom_quat.z();
 		odom.pose.pose.orientation.w = odom_quat.w();
-
+		*/
+	
 		//set the velocity
 		odom.child_frame_id = "base_footprint";
 		odom.twist.twist.linear.x = dx;

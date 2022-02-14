@@ -7,11 +7,8 @@ Panels:
         - /Global Options1
         - /Status1
         - /TF1
-        - /TF1/Status1
         - /TF1/Frames1
         - /TF1/Tree1
-        - /TF1/Tree1/base_footprint1
-        - /TF1/Tree1/base_footprint1/base_link1
       Splitter Ratio: 0.729411780834198
     Tree Height: 699
   - Class: rviz/Selection
@@ -72,18 +69,27 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
         base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        caster_wheel:
+        front_caster:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        imu_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
         left_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lidar_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -108,33 +114,42 @@ Visualization Manager:
           Value: false
         base_link:
           Value: false
-        caster_wheel:
+        front_caster:
+          Value: false
+        imu_link:
           Value: false
         left_wheel_link:
-          Value: true
+          Value: false
+        lidar_link:
+          Value: false
         right_wheel_link:
-          Value: true
+          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        base_footprint:
-          base_link:
-            caster_wheel:
-              {}
-            left_wheel_link:
-              {}
-            right_wheel_link:
-              {}
+        base_link:
+          base_footprint:
+            {}
+          front_caster:
+            {}
+          imu_link:
+            {}
+          left_wheel_link:
+            {}
+          lidar_link:
+            {}
+          right_wheel_link:
+            {}
       Update Interval: 0
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: base_link
+    Fixed Frame: base_footprint
     Frame Rate: 30
   Name: root
   Tools:
@@ -158,7 +173,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.1026313304901123
+      Distance: 1.6611335277557373
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -173,10 +188,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.3553985357284546
+      Pitch: 0.36539849638938904
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.2554015815258026
+      Yaw: 0.465398371219635
     Saved: ~
 Window Geometry:
   Displays:
